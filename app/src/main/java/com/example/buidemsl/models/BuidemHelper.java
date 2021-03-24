@@ -70,7 +70,7 @@ public class BuidemHelper extends SQLiteOpenHelper {
 
         // Creació de la taula TIPUS
         sqlCode =
-                "CREATE TABLE " + TABLE_ZONA + "(" +
+                "CREATE TABLE " + TABLE_TIPUS + "(" +
                 TIPUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 TIPUS_DESCRIPCIO + " TEXT NOT NULL UNIQUE);";
         db.execSQL(sqlCode);
