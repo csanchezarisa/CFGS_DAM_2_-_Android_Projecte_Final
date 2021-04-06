@@ -8,40 +8,40 @@ public class BuidemHelper extends SQLiteOpenHelper {
 
     /* .: 1. DEFINICIÓ DE LES DADES DE LA BBDD :. */
     // Dades sobre la base de dades
-    private static final int DATABSE_VERSION = 1;
-    private static final String DATABASE_NAME = "Buidem_SL_DataBase";
+    public static final int DATABSE_VERSION = 1;
+    public static final String DATABASE_NAME = "Buidem_SL_DataBase";
 
     // Taules
-    private static final String TABLE_CLIENT = "client";
-    private static final String TABLE_MAQUINA = "maquina";
-    private static final String TABLE_TIPUS = "tipus";
-    private static final String TABLE_ZONA = "zona";
+    public static final String TABLE_CLIENT = "client";
+    public static final String TABLE_MAQUINA = "maquina";
+    public static final String TABLE_TIPUS = "tipus";
+    public static final String TABLE_ZONA = "zona";
 
     // Taula client
-    private static final String CLIENT_ID = "_id";
-    private static final String CLIENT_NOM = "nom";
-    private static final String CLIENT_COGNOMS = "cognoms";
-    private static final String CLIENT_EMAIL = "email";
-    private static final String CLIENT_TELEFON = "telefon";
+    public static final String CLIENT_ID = "_id";
+    public static final String CLIENT_NOM = "nom";
+    public static final String CLIENT_COGNOMS = "cognoms";
+    public static final String CLIENT_EMAIL = "email";
+    public static final String CLIENT_TELEFON = "telefon";
 
     // Taula tipus
-    private static final String TIPUS_ID = "_id";
-    private static final String TIPUS_DESCRIPCIO = "descripcio";
+    public static final String TIPUS_ID = "_id";
+    public static final String TIPUS_DESCRIPCIO = "descripcio";
 
     // Taula zona
-    private static final String ZONA_ID = "_id";
-    private static final String ZONA_DESCRIPCIO = "descripcio";
+    public static final String ZONA_ID = "_id";
+    public static final String ZONA_DESCRIPCIO = "descripcio";
 
     // Taula maquina
-    private static final String MAQUINA_ID = "_id";
-    private static final String MAQUINA_ADRECA = "adreca";
-    private static final String MAQUINA_CODI_POSTAL = "codi_postal";
-    private static final String MAQUINA_POBLACIO = "poblacio";
-    private static final String MAQUINA_NUMERO_SERIE = "numero_serie";
-    private static final String MAQUINA_ULTIMA_REVISIO = "ultima_revisio";
-    private static final String MAQUINA_CLIENT = "client_id";
-    private static final String MAQUINA_TIPUS = "tipus_id";
-    private static final String MAQUINA_ZONA = "zona_id";
+    public static final String MAQUINA_ID = "_id";
+    public static final String MAQUINA_ADRECA = "adreca";
+    public static final String MAQUINA_CODI_POSTAL = "codi_postal";
+    public static final String MAQUINA_POBLACIO = "poblacio";
+    public static final String MAQUINA_NUMERO_SERIE = "numero_serie";
+    public static final String MAQUINA_ULTIMA_REVISIO = "ultima_revisio";
+    public static final String MAQUINA_CLIENT = "client_id";
+    public static final String MAQUINA_TIPUS = "tipus_id";
+    public static final String MAQUINA_ZONA = "zona_id";
 
     /** Constructor per crear la base de dades el primer cop que s'instal·la l'aplicació */
     public BuidemHelper(Context context) {
