@@ -14,13 +14,13 @@
     <fragment
         android:id="@+id/nav_zonas"
         android:name="com.example.buidemsl.ui.zonas.ZonasFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_zonas"
         tools:layout="@layout/fragment_zonas" />
 
     <fragment
         android:id="@+id/nav_tipos"
         android:name="com.example.buidemsl.ui.tipos.TiposFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/menu_tipos"
         tools:layout="@layout/fragment_tipos" />
     <fragment
         android:id="@+id/mapsFragment"

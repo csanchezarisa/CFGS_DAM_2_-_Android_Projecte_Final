@@ -11,11 +11,11 @@
         <item
             android:id="@+id/nav_zonas"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_zonas" />
         <item
             android:id="@+id/nav_tipos"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:title="@string/menu_tipos" />
         <item
             android:id="@+id/mapsFragment"
             android:icon="@android:drawable/ic_dialog_map"
