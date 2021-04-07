@@ -41,18 +41,14 @@ public class TiposFragment extends Fragment {
         adapter = new TiposListAdapter(getContext(), R.layout.fragment_tipos_list, datasource.getTipos(), from, to, 0, this);
         list.setAdapter(adapter);
 
-        mostrarAlertSeleccionarColor(null);
-
         return root;
     }
 
-    private void mostrarAlertSeleccionarColor(@Nullable String selectedColor) {
+    public void mostrarAlertSeleccionarColor(long id, int selectedColor) {
         ColorPickerDialog colorPickerDialog = ColorPickerDialog.createColorPickerDialog(getContext());
 
-        if (selectedColor != null) {
-            colorPickerDialog.setLastColor(selectedColor);
-            colorPickerDialog.setInitialColor(Color.parseColor(selectedColor));
-        }
+        colorPickerDialog.setLastColor(selectedColor);
+        colorPickerDialog.setInitialColor(selectedColor);
 
         colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
             @Override
