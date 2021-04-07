@@ -19,7 +19,7 @@
             android:id="@+id/list_item_tipo_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             tools:text="ID" />
 
         <TextView
