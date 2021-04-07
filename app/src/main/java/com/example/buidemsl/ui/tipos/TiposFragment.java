@@ -71,6 +71,11 @@ public class TiposFragment extends Fragment {
         }
     }
 
+    /** Muestra un alert que permite seleccionar el color
+     * de manera gráfica.
+     * @param id long con el id del tipo a editar
+     * @param selectedColor int con el color seleccionado
+     *                      anteriormente en el tipo */
     public void mostrarAlertSeleccionarColor(long id, int selectedColor) {
         ColorPickerDialog colorPickerDialog = ColorPickerDialog.createColorPickerDialog(getContext());
 
@@ -82,12 +87,10 @@ public class TiposFragment extends Fragment {
             public void onColorPicked(int color, String hexVal) {
                 int rowsAfected = datasource.updateTipo(id, null, hexVal);
 
-                if (rowsAfected > 0) {
-
-                }
-                else {
-
-                }
+                if (rowsAfected > 0)
+                    mostrarSnackbarSuccess(getString(R.string.fragment_tipos_snackbar_color_updated_successfuly));
+                else
+                    mostrarSnackbarError(getString(R.string.fragment_tipos_snackbar_color_updated_error));
 
                 refreshList();
             }
