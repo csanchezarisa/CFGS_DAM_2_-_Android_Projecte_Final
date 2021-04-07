@@ -27,6 +27,8 @@ public class MainDatasource {
         super.finalize();
     }
 
+
+    /* .: 1 - ZONAS :. */
     /** Consulta que devuelve todas las zonas
      * @return Cursor con las zonas que hay en la BBDD */
     public Cursor getZonas() {
@@ -122,4 +124,33 @@ public class MainDatasource {
         return rows;
     }
 
+
+    /* .: 2 - TIPOS :. */
+    public Cursor getTipos() {
+        Cursor tipos = dbR.query(
+                BuidemHelper.TABLE_TIPUS,
+                new String[]{BuidemHelper.TIPUS_ID, BuidemHelper.TIPUS_DESCRIPCIO},
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        return tipos;
+    }
+
+    public Cursor getTipo(long id) {
+        Cursor tipo = dbR.query(
+                BuidemHelper.TABLE_TIPUS,
+                new String[]{BuidemHelper.TIPUS_ID, BuidemHelper.TIPUS_DESCRIPCIO},
+                BuidemHelper.TIPUS_ID + " = " + id,
+                null,
+                null,
+                null,
+                null
+        );
+
+        return tipo;
+    }
 }
