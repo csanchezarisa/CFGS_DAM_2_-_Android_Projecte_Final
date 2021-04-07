@@ -57,20 +57,6 @@ public class TiposFragment extends Fragment {
         adapter = new TiposListAdapter(getContext(), R.layout.fragment_tipos_list, datasource.getTipos(), from, to, 0, this);
         list.setAdapter(adapter);
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                return true;
-            }
-        });
-
         FloatingActionButton btnAdd = (FloatingActionButton) root.findViewById(R.id.btn_add_tipo);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +89,7 @@ public class TiposFragment extends Fragment {
      * añadir un tipo
      * @param id long con el id a editar. Si se
      *           pasa un número negativo se añadirá*/
-    private void mostrarAlertTipo(long id) {
+    public void mostrarAlertTipo(long id) {
         Cursor tipo = datasource.getTipo(id);
 
         String alertTitle;

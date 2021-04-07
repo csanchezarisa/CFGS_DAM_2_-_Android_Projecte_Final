@@ -43,6 +43,21 @@ public class TiposListAdapter extends SimpleCursorAdapter {
             }
         });
 
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                parentFragment.mostrarAlertTipo(getItemId(position));
+                return true;
+            }
+        });
+
         return view;
     }
 }

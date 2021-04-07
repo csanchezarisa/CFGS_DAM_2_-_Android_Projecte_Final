@@ -61,14 +61,14 @@ public class ZonasFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mostrarAlertZona(id);
+
             }
         });
 
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mostrarAlertEliminarZona(id);
+                mostrarAlertZona(id);
                 return true;
             }
         });
