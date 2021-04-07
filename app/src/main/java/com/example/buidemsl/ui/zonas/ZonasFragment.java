@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class ZonasFragment extends Fragment {
@@ -59,6 +60,15 @@ public class ZonasFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mostrarAlertEliminarZona(id);
                 return true;
+            }
+        });
+
+        // Botón para añadir zonas
+        FloatingActionButton bntAddZona = root.findViewById(R.id.btn_add_zona);
+        bntAddZona.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarAlertZona(-1);
             }
         });
 
@@ -121,12 +131,13 @@ public class ZonasFragment extends Fragment {
             }
         });
 
-        alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mostrarAlertEliminarZona(id);
-            }
-        });
+        if (id >= 0)
+            alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mostrarAlertEliminarZona(id);
+                }
+            });
 
         alert.show();
     }
@@ -157,7 +168,7 @@ public class ZonasFragment extends Fragment {
 
     private void mostrarSnackbarError(String message) {
 
-        View parentView = getView().findViewById(android.R.id.content);
+        View parentView = getView();
         Snackbar snackbar = Snackbar.make(
                 parentView,
                 Html.fromHtml("<font color=\"#FFFFFF\">" + message + "</font>"),
@@ -173,7 +184,7 @@ public class ZonasFragment extends Fragment {
 
     private void mostrarSnackbarSuccess(String message) {
 
-        View parentView = getView().findViewById(android.R.id.content);
+        View parentView = getView();
         Snackbar snackbar = Snackbar.make(
                 parentView,
                 Html.fromHtml("<font color=\"#FFFFFF\">" + message + "</font>"),
