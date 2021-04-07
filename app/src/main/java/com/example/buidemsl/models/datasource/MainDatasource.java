@@ -67,17 +67,21 @@ public class MainDatasource {
      * @return int con el número de filas afectadas*/
     public int updateZona(long id, String descripcion) {
 
-        ContentValues values = new ContentValues();
-        values.put(BuidemHelper.ZONA_DESCRIPCIO, descripcion);
+        if (descripcion.length() > 0) {
+            ContentValues values = new ContentValues();
+            values.put(BuidemHelper.ZONA_DESCRIPCIO, descripcion);
 
-        int rows = dbW.update(
-                BuidemHelper.TABLE_ZONA,
-                values,
-                BuidemHelper.ZONA_ID + " = " + id,
-                null
-        );
+            int rows = dbW.update(
+                    BuidemHelper.TABLE_ZONA,
+                    values,
+                    BuidemHelper.ZONA_ID + " = " + id,
+                    null
+            );
 
-        return rows;
+            return rows;
+        }
+
+        return -1;
     }
 
     /** Inserta una nueva zona.
@@ -86,16 +90,20 @@ public class MainDatasource {
      * @return long con el id del nuevo insert*/
     public long insertZona(String descripcion) {
 
-        ContentValues values = new ContentValues();
-        values.put(BuidemHelper.ZONA_DESCRIPCIO, descripcion);
+        if (descripcion.length() > 0) {
+            ContentValues values = new ContentValues();
+            values.put(BuidemHelper.ZONA_DESCRIPCIO, descripcion);
 
-        long id = dbW.insert(
-                BuidemHelper.TABLE_ZONA,
-                null,
-                values
-        );
+            long id = dbW.insert(
+                    BuidemHelper.TABLE_ZONA,
+                    null,
+                    values
+            );
 
-        return id;
+            return id;
+        }
+
+        return -1;
     }
 
     /** Elimna la zona especificada

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,12 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
+import com.google.android.material.snackbar.Snackbar;
 
 public class ZonasFragment extends Fragment {
 
@@ -100,7 +101,15 @@ public class ZonasFragment extends Fragment {
                     status = datasource.updateZona(id, input.getText().toString());
                 }
 
-                mostrarSnackbar(status);
+                if (status > 0 && id >= 0)
+                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_updated));
+                else if (status > 0)
+                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_inserted));
+                else if (id >= 0)
+                    mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_updating));
+                else
+                    mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_inserting));
+
                 refreshList();
             }
         });
@@ -132,7 +141,6 @@ public class ZonasFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 long status = datasource.deleteZona(id);
-                mostrarSnackbar(status);
                 refreshList();
             }
         });
@@ -147,8 +155,36 @@ public class ZonasFragment extends Fragment {
         alert.show();
     }
 
-    private void mostrarSnackbar(long status) {
+    private void mostrarSnackbarError(String message) {
 
+        View parentView = getView().findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(
+                parentView,
+                Html.fromHtml("<font color=\"#FFFFFF\">" + message + "</font>"),
+                Snackbar.LENGTH_LONG
+        );
+
+        View snackbarView = snackbar.getView();
+
+        snackbarView.setBackgroundColor(getContext().getColor(R.color.design_default_color_error));
+
+        snackbar.show();
+    }
+
+    private void mostrarSnackbarSuccess(String message) {
+
+        View parentView = getView().findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(
+                parentView,
+                Html.fromHtml("<font color=\"#FFFFFF\">" + message + "</font>"),
+                Snackbar.LENGTH_LONG
+        );
+
+        View snackbarView = snackbar.getView();
+
+        snackbarView.setBackgroundColor(getContext().getColor(android.R.color.holo_green_dark));
+
+        snackbar.show();
     }
 
     private void refreshList() {
