@@ -27,13 +27,15 @@ public class TiposListAdapter extends SimpleCursorAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
 
+        // Se recupera el tipo
         Cursor tipo = (Cursor) getItem(position);
 
+        // Se cambia el color del botón por el del tipo
         Button button = (Button) view.findViewById(R.id.btn_list_item_tipo_color);
-
         int colorTipo = Color.parseColor(tipo.getString(tipo.getColumnIndexOrThrow(BuidemHelper.TIPUS_COLOR)));
         button.setBackgroundColor(colorTipo);
 
+        // Se crea un listener en el botón para abrir el ColorPicker
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -183,4 +183,41 @@ public class MainDatasource {
 
         return rows;
     }
+
+    public long insertTipo(@NonNull String descripcion, @Nullable String color) {
+
+        long id = -1;
+
+        if (descripcion.length() > 0) {
+
+            ContentValues values = new ContentValues();
+            values.put(BuidemHelper.TIPUS_DESCRIPCIO, descripcion);
+            if (color != null)
+                values.put(BuidemHelper.TIPUS_COLOR, color);
+
+            id = dbW.insert(
+                    BuidemHelper.TABLE_TIPUS,
+                    null,
+                    values
+            );
+        }
+
+        return id;
+    }
+
+    /** Elimna la zona especificada
+     * @param id long con el id de
+     * la zona a eliminar
+     * @return int con el número de
+     * filas afectadas*/
+    public int deleteTipo(long id) {
+
+        int rows = dbW.delete(
+                BuidemHelper.TABLE_TIPUS,
+                BuidemHelper.TIPUS_ID + " = " + id,
+                null
+        );
+
+        return rows;
+    }
 }
