@@ -23,5 +23,6 @@
     <string name="fragment_zonas_snackbar_error_inserting">There was an error inserting that zone\nPlease try again</string>
     <string name="fragment_zonas_snackbar_error_updating">There was an error updating\nPlease try again</string>
     <string name="fragment_zonas_snackbar_error_deleting">There was an error deleting\nPlease try again</string>
-    <string name="fragment_zonas_empty_list">Oops!\nThere isn\'t any zone.\nYou can create one by pressing the Add button.</string>
+    <string name="fragment_zonas_empty_list">Oops! There isn\'t any zone. You can create one by pressing the Add button.</string>
+    <string name="fragment_tipos_empty_list">Oops! There isn\'t any type. You can create one by pressing the Add button.</string>
 </resources>

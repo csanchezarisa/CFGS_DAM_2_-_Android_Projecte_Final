@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.example.buidemsl.models.BuidemHelper;
 
 public class MainDatasource {
@@ -152,5 +155,32 @@ public class MainDatasource {
         );
 
         return tipo;
+    }
+
+    /** Permite actualizar un tipo especificado
+     * @param id long con el id del tipo que se
+     *           quiere actualizar
+     * @param descripcion String con la nueva
+     *                   descripción para el tipo
+     * @param color String con el nuevo color para
+     *              el tipo
+     * @return int con el número de filas afectadas */
+    public int updateTipo(@NonNull long id, @Nullable String descripcion, @Nullable String color) {
+        ContentValues values = new ContentValues();
+
+        if (descripcion != null && descripcion.length() > 0)
+            values.put(BuidemHelper.TIPUS_DESCRIPCIO, descripcion);
+
+        if (color != null && color.length() > 0)
+            values.put(BuidemHelper.TIPUS_COLOR, color);
+
+        int rows = dbW.update(
+                BuidemHelper.TABLE_TIPUS,
+                values,
+                BuidemHelper.TIPUS_ID + " = " + id,
+                null
+        );
+
+        return rows;
     }
 }

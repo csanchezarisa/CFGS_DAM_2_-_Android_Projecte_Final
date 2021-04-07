@@ -85,6 +85,10 @@ public class ZonasFragment extends Fragment {
         return root;
     }
 
+    /** Revisa si en la lista hay elementos o no.
+     * Si hay algún elemento oculta el mensaje de
+     * lista vacía, si no hay ningún elemento lo
+     * hace visible */
     private void mostrarEmptyText() {
         if (adapter.getCount() > 0) {
             listEmptyText.setVisibility(View.GONE);
