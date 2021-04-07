@@ -75,6 +75,10 @@ public class ZonasFragment extends Fragment {
         return root;
     }
 
+    /** Muestra un alert que permite editar o
+     * añadir una zona
+     * @param id long con el id a editar. Si se
+     *           pasa un número negativo se añadirá*/
     private void mostrarAlertZona(long id) {
         Cursor zona = datasource.getZona(id);
 
@@ -142,6 +146,8 @@ public class ZonasFragment extends Fragment {
         alert.show();
     }
 
+    /** Muestra un alert de confirmación antes de eliminar
+     * @param id long con el id del elemento a eliminar */
     private void mostrarAlertEliminarZona(long id) {
         AlertDialog alert = new AlertDialog.Builder(getContext()).create();
 
@@ -166,6 +172,8 @@ public class ZonasFragment extends Fragment {
         alert.show();
     }
 
+    /** Muestra un Snackbar rojo con el mensaje de error personalizado
+     * @param message Strnig con el mensaje de error */
     private void mostrarSnackbarError(String message) {
 
         View parentView = getView();
@@ -182,6 +190,8 @@ public class ZonasFragment extends Fragment {
         snackbar.show();
     }
 
+    /** Muestra un Snackbar verde con un mensaje de éxito
+     * @param message String con el contenido del mensaje a mostrar */
     private void mostrarSnackbarSuccess(String message) {
 
         View parentView = getView();
@@ -198,6 +208,7 @@ public class ZonasFragment extends Fragment {
         snackbar.show();
     }
 
+    /** Actualiza el contenidoq que se muestra en la lista */
     private void refreshList() {
         adapter.changeCursor(datasource.getZonas());
     }
