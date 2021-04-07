@@ -20,7 +20,8 @@
     <string name="fragment_zonas_snackbar_successfuly_deleted">Deleted successfuly</string>
     <string name="fragment_zonas_snackbar_successfuly_updated">Updated successfuly</string>
     <string name="fragment_zonas_snackbar_successfuly_inserted">Inserted successfuly</string>
-    <string name="fragment_zonas_snackbar_error_inserting">There was an error inserting that zone\\nPlease try again</string>
-    <string name="fragment_zonas_snackbar_error_updating">There was an error updating\\nPlease try again</string>
-    <string name="fragment_zonas_snackbar_error_deleting">There was an error deleting\\nPlease try again</string>
+    <string name="fragment_zonas_snackbar_error_inserting">There was an error inserting that zone\nPlease try again</string>
+    <string name="fragment_zonas_snackbar_error_updating">There was an error updating\nPlease try again</string>
+    <string name="fragment_zonas_snackbar_error_deleting">There was an error deleting\nPlease try again</string>
+    <string name="fragment_zonas_empty_list">Oops!\nThere isn\'t any zone.\nYou can create one by pressing the Add button.</string>
 </resources>

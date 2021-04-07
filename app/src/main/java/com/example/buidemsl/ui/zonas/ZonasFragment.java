@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,6 +31,9 @@ public class ZonasFragment extends Fragment {
     private MainDatasource datasource;
     private CursorAdapter adapter;
 
+    private TextView listEmptyText;
+    private ImageView listEmptyImg;
+
     private String[] from = new String[]{
             BuidemHelper.ZONA_ID,
             BuidemHelper.ZONA_DESCRIPCIO
@@ -43,10 +48,15 @@ public class ZonasFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_zonas, container, false);
         datasource = new MainDatasource(getContext());
 
+        listEmptyImg = (ImageView) root.findViewById(R.id.img_zonas_empty);
+        listEmptyText = (TextView) root.findViewById(R.id.txt_zonas_empty);
+
         // Se busca la lista y se le asigna el adapter. Se crean los listeners
         list = (ListView) root.findViewById(R.id.list_zonas);
         adapter = new SimpleCursorAdapter(getContext(), R.layout.fragment_zonas_list, datasource.getZonas(), from, to, 0);
         list.setAdapter(adapter);
+
+        mostrarEmptyText();
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -73,6 +83,17 @@ public class ZonasFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void mostrarEmptyText() {
+        if (adapter.getCount() > 0) {
+            listEmptyText.setVisibility(View.GONE);
+            listEmptyImg.setVisibility(View.GONE);
+        }
+        else {
+            listEmptyImg.setVisibility(View.VISIBLE);
+            listEmptyText.setVisibility(View.VISIBLE);
+        }
     }
 
     /** Muestra un alert que permite editar o
@@ -211,5 +232,6 @@ public class ZonasFragment extends Fragment {
     /** Actualiza el contenidoq que se muestra en la lista */
     private void refreshList() {
         adapter.changeCursor(datasource.getZonas());
+        mostrarEmptyText();
     }
 }
