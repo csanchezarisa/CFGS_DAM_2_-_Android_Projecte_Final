@@ -15,7 +15,13 @@
         android:id="@+id/nav_zonas"
         android:name="com.example.buidemsl.ui.zonas.ZonasFragment"
         android:label="@string/menu_zonas"
-        tools:layout="@layout/fragment_zonas" />
+        tools:layout="@layout/fragment_zonas" >
+        <action
+            android:id="@+id/action_nav_zonas_to_mapsFragment"
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_close_exit" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_tipos"

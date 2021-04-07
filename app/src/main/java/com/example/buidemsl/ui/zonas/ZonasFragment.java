@@ -18,10 +18,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
+import com.example.buidemsl.ui.MapsFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -61,7 +65,7 @@ public class ZonasFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                openMap(0);
             }
         });
 
@@ -237,5 +241,11 @@ public class ZonasFragment extends Fragment {
     private void refreshList() {
         adapter.changeCursor(datasource.getZonas());
         mostrarEmptyText();
+    }
+
+    private void openMap(long id) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("id", id);
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_zonas_to_mapsFragment, bundle);
     }
 }
