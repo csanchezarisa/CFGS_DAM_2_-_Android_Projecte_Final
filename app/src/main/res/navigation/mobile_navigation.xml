@@ -20,7 +20,9 @@
             android:id="@+id/action_nav_zonas_to_mapsFragment"
             app:destination="@id/mapsFragment"
             app:enterAnim="@anim/fragment_fade_enter"
-            app:exitAnim="@anim/fragment_close_exit" />
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
 
     <fragment
@@ -31,6 +33,6 @@
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.buidemsl.ui.MapsFragment"
-        android:label="fragment_maps"
+        android:label="@string/menu_maps"
         tools:layout="@layout/fragment_maps" />
 </navigation>

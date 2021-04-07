@@ -27,4 +27,5 @@
     <string name="fragment_tipos_empty_list">Oops! There isn\'t any type. You can create one by pressing the Add button.</string>
     <string name="fragment_tipos_snackbar_color_updated_successfuly">The color was updated successfuly</string>
     <string name="fragment_tipos_snackbar_color_updated_error">There was an error updating the color.\nPlease try it again</string>
+    <string name="menu_maps">Maps</string>
 </resources>
