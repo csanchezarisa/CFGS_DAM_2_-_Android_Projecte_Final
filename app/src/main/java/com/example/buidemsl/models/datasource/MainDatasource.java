@@ -129,7 +129,7 @@ public class MainDatasource {
     public Cursor getTipos() {
         Cursor tipos = dbR.query(
                 BuidemHelper.TABLE_TIPUS,
-                new String[]{BuidemHelper.TIPUS_ID, BuidemHelper.TIPUS_DESCRIPCIO},
+                new String[]{BuidemHelper.TIPUS_ID, BuidemHelper.TIPUS_DESCRIPCIO, BuidemHelper.TIPUS_COLOR},
                 null,
                 null,
                 null,
@@ -143,7 +143,7 @@ public class MainDatasource {
     public Cursor getTipo(long id) {
         Cursor tipo = dbR.query(
                 BuidemHelper.TABLE_TIPUS,
-                new String[]{BuidemHelper.TIPUS_ID, BuidemHelper.TIPUS_DESCRIPCIO},
+                new String[]{BuidemHelper.TIPUS_ID, BuidemHelper.TIPUS_DESCRIPCIO, BuidemHelper.TIPUS_COLOR},
                 BuidemHelper.TIPUS_ID + " = " + id,
                 null,
                 null,

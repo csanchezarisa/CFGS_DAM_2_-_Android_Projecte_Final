@@ -8,7 +8,7 @@ public class BuidemHelper extends SQLiteOpenHelper {
 
     /* .: 1. DEFINICIÓ DE LES DADES DE LA BBDD :. */
     // Dades sobre la base de dades
-    public static final int DATABSE_VERSION = 1;
+    public static final int DATABSE_VERSION = 2;
     public static final String DATABASE_NAME = "Buidem_SL_DataBase";
 
     // Taules
@@ -27,6 +27,7 @@ public class BuidemHelper extends SQLiteOpenHelper {
     // Taula tipus
     public static final String TIPUS_ID = "_id";
     public static final String TIPUS_DESCRIPCIO = "descripcio";
+    public static final String TIPUS_COLOR = "color";
 
     // Taula zona
     public static final String ZONA_ID = "_id";
@@ -72,7 +73,8 @@ public class BuidemHelper extends SQLiteOpenHelper {
         sqlCode =
                 "CREATE TABLE " + TABLE_TIPUS + "(" +
                 TIPUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                TIPUS_DESCRIPCIO + " TEXT NOT NULL UNIQUE);";
+                TIPUS_DESCRIPCIO + " TEXT NOT NULL UNIQUE," +
+                TIPUS_COLOR + " TEXT NOT NULL DEFAULT '#FFFFFF');";
         db.execSQL(sqlCode);
 
         // Creació de la taula MAQUINA
@@ -108,6 +110,10 @@ public class BuidemHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (oldVersion < 2) {
+            String sqlCode = "ALTER TABLE " + TABLE_TIPUS +
+                    " ADD COLUMN " + TIPUS_COLOR + " TEXT NOT NULL DEFAULT '#FFFFFF';";
+            db.execSQL(sqlCode);
+        }
     }
 }

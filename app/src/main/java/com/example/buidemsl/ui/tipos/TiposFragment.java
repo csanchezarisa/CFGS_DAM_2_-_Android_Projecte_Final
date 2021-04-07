@@ -1,19 +1,17 @@
 package com.example.buidemsl.ui.tipos;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
+import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
@@ -43,6 +41,26 @@ public class TiposFragment extends Fragment {
         adapter = new TiposListAdapter(getContext(), R.layout.fragment_tipos_list, datasource.getTipos(), from, to, 0, this);
         list.setAdapter(adapter);
 
+        mostrarAlertSeleccionarColor(null);
+
         return root;
+    }
+
+    private void mostrarAlertSeleccionarColor(@Nullable String selectedColor) {
+        ColorPickerDialog colorPickerDialog = ColorPickerDialog.createColorPickerDialog(getContext());
+
+        if (selectedColor != null) {
+            colorPickerDialog.setLastColor(selectedColor);
+            colorPickerDialog.setInitialColor(Color.parseColor(selectedColor));
+        }
+
+        colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
+            @Override
+            public void onColorPicked(int color, String hexVal) {
+                Toast.makeText(getContext(), hexVal, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        colorPickerDialog.show();
     }
 }
