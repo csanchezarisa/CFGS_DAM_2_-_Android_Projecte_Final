@@ -220,4 +220,29 @@ public class MainDatasource {
 
         return rows;
     }
+
+
+    /* .: 3 - CLIENTES :. */
+    /** Devuelve un cursor con todos
+     * los registros de la tabla
+     * clients */
+    public Cursor getClientes() {
+        Cursor clientes = dbR.query(
+                BuidemHelper.TABLE_CLIENT,
+                new String[]{
+                        BuidemHelper.CLIENT_ID,
+                        BuidemHelper.CLIENT_NOM,
+                        BuidemHelper.CLIENT_COGNOMS,
+                        BuidemHelper.CLIENT_EMAIL,
+                        BuidemHelper.CLIENT_TELEFON
+                },
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        return clientes;
+    }
 }
