@@ -48,5 +48,7 @@
     <string name="fragment_machine_managment_town">Town</string>
     <string name="fragment_machine_managment_last_revision">Last revision</string>
     <string name="fragment_machine_managment_client">Client</string>
+    <string name="fragment_machine_managment_type">Type</string>
+    <string name="fragment_machine_managment_zone">Zone</string>
     <string name="menu_maps">Maps</string>
 </resources>

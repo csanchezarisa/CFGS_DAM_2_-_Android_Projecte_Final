@@ -67,5 +67,34 @@
         android:id="@+id/machineManagmentFragment"
         android:name="com.example.buidemsl.ui.home.MachineManagmentFragment"
         android:label="@string/fragment_machine_managment_title"
-        tools:layout="@layout/fragment_machine_managment" />
+        tools:layout="@layout/fragment_machine_managment" >
+        <action
+            android:id="@+id/action_machineManagmentFragment_to_nav_tipos"
+            app:destination="@id/nav_tipos"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_close_exit"/>
+        <action
+            android:id="@+id/action_machineManagmentFragment_to_nav_zonas"
+            app:destination="@id/nav_zonas"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_close_exit"/>
+        <action
+            android:id="@+id/action_machineManagmentFragment_to_clientsFragment"
+            app:destination="@id/clientsFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_close_exit"/>
+        <action
+            android:id="@+id/action_machineManagmentFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_close_exit"/>
+    </fragment>
 </navigation>

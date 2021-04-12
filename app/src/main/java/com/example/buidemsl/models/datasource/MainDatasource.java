@@ -346,6 +346,11 @@ public class MainDatasource {
 
 
     /* .: 4 - MAQUINAS :. */
+    /** Devuelve un cursor con todas las máquinas
+     * que hay en la tabla maquina.
+     * @param orderBy String Nullable para ordenar
+     *                la quey
+     * @return Cursor con las maquinas de la tabla */
     public Cursor getMaquinas(@Nullable String orderBy) {
         String sqlCode =
                 "SELECT *" +
@@ -359,6 +364,21 @@ public class MainDatasource {
 
         if (orderBy != null && orderBy.length() > 0)
             sqlCode += " ORDER BY " + orderBy;
+
+        return dbR.rawQuery(sqlCode, null);
+    }
+
+    public Cursor getMaquina(long id) {
+        final String sqlCode =
+                "SELECT *" +
+                " FROM " + BuidemHelper.TABLE_MAQUINA  +
+                " INNER JOIN " + BuidemHelper.TABLE_CLIENT +
+                " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT + " = " + BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_ID +
+                " INNER JOIN " + BuidemHelper.TABLE_ZONA +
+                " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA + " = " + BuidemHelper.TABLE_ZONA + "." + BuidemHelper.ZONA_ID +
+                " INNER JOIN " + BuidemHelper.TABLE_TIPUS +
+                " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS + " = " + BuidemHelper.TABLE_TIPUS + "." + BuidemHelper.TIPUS_ID +
+                " WHERE " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ID + " = " + id;
 
         return dbR.rawQuery(sqlCode, null);
     }

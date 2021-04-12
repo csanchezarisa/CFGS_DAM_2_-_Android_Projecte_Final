@@ -1,18 +1,57 @@
 package com.example.buidemsl.ui.home;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 
 import com.example.buidemsl.R;
+import com.example.buidemsl.models.BuidemHelper;
+import com.example.buidemsl.models.datasource.MainDatasource;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MachineManagmentFragment extends Fragment {
 
+    // ID de la maquina a editar
     private long id = -1;
+
+    // Botones para añadir/editar/eliminar la maquina
+    private FloatingActionButton btnAdd;
+    private FloatingActionButton btnEdit;
+    private FloatingActionButton btnDelete;
+
+    // Botones para añadir cliente, tipo y zona
+    private ImageButton btnAddClient;
+    private ImageButton btnAddType;
+    private ImageButton btnAddZone;
+
+    // Inputs necesarios para crear una maquina
+    private EditText edtSerial;
+    private EditText edtDirection;
+    private EditText edtPostalCode;
+    private EditText edtTown;
+    private EditText edtLastRevision;
+    private Spinner dropClient;
+    private Spinner dropType;
+    private Spinner dropZone;
+
+    // Datasource
+    private MainDatasource datasource;
+
+    // Constantes para saber a qué fragment navegar
+    private static final int NAVIGATE_CLIENTS = 1;
+    private static final int NAVIGATE_ZONES = 2;
+    private static final int NAVIGATE_TYPES = 3;
+    private static final int NAVIGATE_MAPS = 4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -22,6 +61,160 @@ public class MachineManagmentFragment extends Fragment {
         if (getArguments() != null)
             id = getArguments().getLong("id");
 
+        datasource = new MainDatasource(getContext());
+
+        btnAdd = (FloatingActionButton) root.findViewById(R.id.btn_add_new_maquina);
+        btnEdit = (FloatingActionButton) root.findViewById(R.id.btn_edit_maquina);
+        btnDelete = (FloatingActionButton) root.findViewById(R.id.btn_delete_maquina);
+
+        btnAddClient = (ImageButton) root.findViewById(R.id.btn_add_new_client);
+        btnAddType = (ImageButton) root.findViewById(R.id.btn_add_new_tipus);
+        btnAddZone = (ImageButton) root.findViewById(R.id.btn_add_new_zona);
+
+        edtSerial = (EditText) root.findViewById(R.id.edt_machine_serial);
+        edtDirection = (EditText) root.findViewById(R.id.edt_machine_adreca);
+        edtPostalCode = (EditText) root.findViewById(R.id.edt_machine_cp);
+        edtTown = (EditText) root.findViewById(R.id.edt_machine_poblacio);
+        edtLastRevision = (EditText) root.findViewById(R.id.edt_machine_ultima_revisio);
+        dropClient = (Spinner) root.findViewById(R.id.drop_machine_client);
+        dropType = (Spinner) root.findViewById(R.id.drop_machine_tipus);
+        dropZone = (Spinner) root.findViewById(R.id.drop_machine_zona);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnAddClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateFragment(0, NAVIGATE_CLIENTS);
+            }
+        });
+
+        btnAddType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateFragment(0, NAVIGATE_TYPES);
+            }
+        });
+
+        btnAddZone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateFragment(0, NAVIGATE_ZONES);
+            }
+        });
+
+        setSpinnerAdapters();
+
+        configureLayout();
+
         return root;
+    }
+
+    /** Rellena los spiners/dropdowns con el contenido  */
+    private void setSpinnerAdapters() {
+
+        final int[] to = new int[]{
+                android.R.id.text1
+        };
+
+        final String[] cFrom = new String[]{
+                BuidemHelper.CLIENT_COGNOMS
+        };
+        final String[] tFrom = new String[]{
+                BuidemHelper.TIPUS_DESCRIPCIO
+        };
+        final String[] zFrom = new String[]{
+                BuidemHelper.ZONA_DESCRIPCIO
+        };
+
+        final SimpleCursorAdapter cAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_spinner_item, datasource.getClientes(), cFrom, to, 0);
+        final SimpleCursorAdapter tAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_spinner_item, datasource.getTipos(), tFrom, to, 0);
+        final SimpleCursorAdapter zAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_spinner_item, datasource.getZonas(), zFrom, to, 0);
+
+        cAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        tAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        zAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        dropClient.setAdapter(cAdapter);
+        dropType.setAdapter(tAdapter);
+        dropZone.setAdapter(zAdapter);
+    }
+
+    /** Si el id a editar es negativo
+     * esconde los botones de edición.
+     * Si el id es positivo esconde el
+     * botón para añadir una nueva máquina
+     * y rellena los inputs con los datos
+     * registrados en la bbdd */
+    private void configureLayout() {
+        if (id < 0) {
+            // Se esconden los botones de edición
+            btnDelete.setVisibility(View.GONE);
+            btnEdit.setVisibility(View.GONE);
+        }
+        else {
+            // Se esconde el botón para añadir
+            btnAdd.setVisibility(View.GONE);
+
+            Cursor maquina = datasource.getMaquina(id);
+            maquina.moveToFirst();
+
+            edtSerial.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE)));
+            edtDirection.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ADRECA)));
+            edtPostalCode.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CODI_POSTAL)));
+            edtTown.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_POBLACIO)));
+            edtLastRevision.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ULTIMA_REVISIO)));
+
+            dropClient.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT)) - 1);
+            dropZone.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA)) - 1);
+            dropType.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS)) - 1);
+
+        }
+    }
+
+    /** Cambia el fragment al seleccionado
+     * @param idMaquina long con la máquina seleccionada.
+     *                  Solo se usará cuando se abra el mapa
+     * @param navigate int con la constante de la acción a realizar */
+    private void navigateFragment(long idMaquina, int navigate) {
+        switch (navigate) {
+            case NAVIGATE_CLIENTS:
+                NavHostFragment.findNavController(this).navigate(R.id.action_machineManagmentFragment_to_clientsFragment);
+                break;
+
+            case NAVIGATE_TYPES:
+                NavHostFragment.findNavController(this).navigate(R.id.action_machineManagmentFragment_to_nav_tipos);
+                break;
+
+            case NAVIGATE_ZONES:
+                NavHostFragment.findNavController(this).navigate(R.id.action_machineManagmentFragment_to_nav_zonas);
+                break;
+
+            case NAVIGATE_MAPS:
+                Bundle bundle = new Bundle();
+                bundle.putString("column_name", BuidemHelper.TABLE_MAQUINA);
+                bundle.putLong("id", idMaquina);
+                NavHostFragment.findNavController(this).navigate(R.id.action_machineManagmentFragment_to_mapsFragment, bundle);
+                break;
+        }
     }
 }
