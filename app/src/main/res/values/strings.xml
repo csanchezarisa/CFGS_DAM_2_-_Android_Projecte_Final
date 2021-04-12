@@ -50,5 +50,6 @@
     <string name="fragment_machine_managment_client">Client</string>
     <string name="fragment_machine_managment_type">Type</string>
     <string name="fragment_machine_managment_zone">Zone</string>
+    <string name="fragment_machine_managment_alert_content">Machine</string>
     <string name="menu_maps">Maps</string>
 </resources>

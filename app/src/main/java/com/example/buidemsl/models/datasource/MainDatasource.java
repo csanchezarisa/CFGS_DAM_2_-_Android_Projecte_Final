@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.buidemsl.models.BuidemHelper;
+import com.example.buidemsl.util.Date;
 
 public class MainDatasource {
 
@@ -368,6 +369,9 @@ public class MainDatasource {
         return dbR.rawQuery(sqlCode, null);
     }
 
+    /** Devuelve un Cursor con la máquina seleccionada
+     * @param id long con el id de la máquina a buscar
+     * @return Cursor con la select hecha */
     public Cursor getMaquina(long id) {
         final String sqlCode =
                 "SELECT *" +
@@ -381,5 +385,95 @@ public class MainDatasource {
                 " WHERE " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ID + " = " + id;
 
         return dbR.rawQuery(sqlCode, null);
+    }
+
+    /** Actualiza una máquina ya insertada
+     * @param id long con el id de la máquina a actualizar
+     * @param serial String con el número de serie de la máquina
+     * @param adreca String con la dirección de la máquina
+     * @param codiPostal String con el codigo postal
+     * @param poblacio String con la población
+     * @param date Opcional. Objeto Date con la fecha de última revisión
+     * @param client long con el id del Cliente
+     * @param tipus long con el id del tipo
+     * @param zona long con el id de la zona
+     * @return int con el número de filas afectadas*/
+    public int updateMaquina(@NonNull long id, @NonNull String serial, @NonNull String adreca, @NonNull String codiPostal, @NonNull String poblacio, @Nullable Date date, @NonNull long client, @NonNull long tipus, @NonNull long zona) {
+        int rows = 0;
+
+        // ¿Los Strings obligatorios estan vacíos?
+        if (serial.length() > 0 && adreca.length() > 0 && codiPostal.length() > 0 && poblacio.length() > 0) {
+            ContentValues values = new ContentValues();
+            values.put(BuidemHelper.MAQUINA_NUMERO_SERIE, serial);
+            values.put(BuidemHelper.MAQUINA_ADRECA, adreca);
+            values.put(BuidemHelper.MAQUINA_CODI_POSTAL, codiPostal);
+            values.put(BuidemHelper.MAQUINA_POBLACIO, poblacio);
+            values.put(BuidemHelper.MAQUINA_CLIENT, client);
+            values.put(BuidemHelper.MAQUINA_TIPUS, tipus);
+            values.put(BuidemHelper.MAQUINA_ZONA, zona);
+
+            if (date != null)
+                values.put(BuidemHelper.MAQUINA_ULTIMA_REVISIO, date.getSQLDate());
+
+            rows = dbW.update(
+                    BuidemHelper.TABLE_MAQUINA,
+                    values,
+                    BuidemHelper.MAQUINA_ID + " = " + id,
+                    null
+            );
+        }
+
+        return rows;
+    }
+
+    /** Inserta una nueva máquina
+     * @param serial String con el número de serie de la máquina
+     * @param adreca String con la dirección de la máquina
+     * @param codiPostal String con el codigo postal
+     * @param poblacio String con la población
+     * @param date Opcional. Objeto Date con la fecha de última revisión
+     * @param client long con el id del Cliente
+     * @param tipus long con el id del tipo
+     * @param zona long con el id de la zona
+     * @return long con el id del nuevo registro */
+    public long insertMaquina(@NonNull String serial, @NonNull String adreca, @NonNull String codiPostal, @NonNull String poblacio, @Nullable Date date, @NonNull long client, @NonNull long tipus, @NonNull long zona) {
+        long id = -1;
+
+        // ¿Los Strings obligatorios estan vacíos?
+        if (serial.length() > 0 && adreca.length() > 0 && codiPostal.length() > 0 && poblacio.length() > 0) {
+            ContentValues values = new ContentValues();
+            values.put(BuidemHelper.MAQUINA_NUMERO_SERIE, serial);
+            values.put(BuidemHelper.MAQUINA_ADRECA, adreca);
+            values.put(BuidemHelper.MAQUINA_CODI_POSTAL, codiPostal);
+            values.put(BuidemHelper.MAQUINA_POBLACIO, poblacio);
+            values.put(BuidemHelper.MAQUINA_CLIENT, client);
+            values.put(BuidemHelper.MAQUINA_TIPUS, tipus);
+            values.put(BuidemHelper.MAQUINA_ZONA, zona);
+
+            if (date != null)
+                values.put(BuidemHelper.MAQUINA_ULTIMA_REVISIO, date.getSQLDate());
+
+            id = dbW.insert(
+                    BuidemHelper.TABLE_MAQUINA,
+                    null,
+                    values
+            );
+        }
+
+        return id;
+    }
+
+    /** Elimina una maquina.
+     * @param id long con el id de la maquina
+     *           a eliminar
+     * @return int con el número de filas afectadas */
+    public int deleteMaquina(long id) {
+        int rows = dbW.delete(
+                BuidemHelper.TABLE_MAQUINA,
+                BuidemHelper.MAQUINA_ID + " = " + id,
+                null
+        );
+
+        return rows;
     }
 }

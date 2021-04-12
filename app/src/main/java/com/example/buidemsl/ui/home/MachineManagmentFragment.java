@@ -1,11 +1,14 @@
 package com.example.buidemsl.ui.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +20,9 @@ import android.widget.Spinner;
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
+import com.example.buidemsl.util.Date;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MachineManagmentFragment extends Fragment {
 
@@ -52,6 +57,8 @@ public class MachineManagmentFragment extends Fragment {
     private static final int NAVIGATE_ZONES = 2;
     private static final int NAVIGATE_TYPES = 3;
     private static final int NAVIGATE_MAPS = 4;
+    private static final int EDIT_ACTION = 1;
+    private static final int CREATE_ACTION = 2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,21 +90,29 @@ public class MachineManagmentFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                try {
+                    manageMachine(CREATE_ACTION);
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
             }
         });
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                try {
+                    manageMachine(EDIT_ACTION);
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
             }
         });
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mostrarAlertEliminarZona(id);
             }
         });
 
@@ -159,6 +174,50 @@ public class MachineManagmentFragment extends Fragment {
         dropZone.setAdapter(zAdapter);
     }
 
+    /** Actualiza/crea una máquina.
+     * @param action int con la constante referente
+     *               a la acción a realizar */
+    private void manageMachine(int action) throws Throwable {
+        final String serial = edtSerial.getText().toString();
+        final String direction = edtDirection.getText().toString();
+        final String postalCode = edtPostalCode.getText().toString();
+        final String town = edtTown.getText().toString();
+        Date date = null;
+        try {
+            date = new Date(edtLastRevision.getText().toString(), false);
+        }
+        catch (Exception e) {
+
+        }
+        final long client = dropClient.getSelectedItemId();
+        final long zone = dropZone.getSelectedItemId();
+        final long type = dropType.getSelectedItemId();
+
+        long status;
+
+        switch (action) {
+            case EDIT_ACTION:
+                status = datasource.updateMaquina(id, serial, direction, postalCode, town, date, client, type, zone);
+                break;
+
+            case CREATE_ACTION:
+                status = datasource.insertMaquina(serial, direction, postalCode, town, date, client, type, zone);
+                break;
+
+            default:
+                status = -1;
+        }
+
+        if (status > 0) {
+            finish();
+        }
+    }
+
+    /** Finaliza el fragment */
+    private void finish() throws Throwable {
+        finalize();
+    }
+
     /** Si el id a editar es negativo
      * esconde los botones de edición.
      * Si el id es positivo esconde el
@@ -175,18 +234,23 @@ public class MachineManagmentFragment extends Fragment {
             // Se esconde el botón para añadir
             btnAdd.setVisibility(View.GONE);
 
-            Cursor maquina = datasource.getMaquina(id);
-            maquina.moveToFirst();
+            try {
+                Cursor maquina = datasource.getMaquina(id);
+                maquina.moveToFirst();
 
-            edtSerial.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE)));
-            edtDirection.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ADRECA)));
-            edtPostalCode.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CODI_POSTAL)));
-            edtTown.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_POBLACIO)));
-            edtLastRevision.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ULTIMA_REVISIO)));
+                edtSerial.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE)));
+                edtDirection.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ADRECA)));
+                edtPostalCode.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CODI_POSTAL)));
+                edtTown.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_POBLACIO)));
+                edtLastRevision.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ULTIMA_REVISIO)));
 
-            dropClient.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT)) - 1);
-            dropZone.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA)) - 1);
-            dropType.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS)) - 1);
+                dropClient.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT)) - 1);
+                dropZone.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA)) - 1);
+                dropType.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS)) - 1);
+            }
+            catch (Exception e) {
+                mostrarSnackbarError(e.toString());
+            }
 
         }
     }
@@ -216,5 +280,58 @@ public class MachineManagmentFragment extends Fragment {
                 NavHostFragment.findNavController(this).navigate(R.id.action_machineManagmentFragment_to_mapsFragment, bundle);
                 break;
         }
+    }
+
+    /** Muestra un alert de confirmación antes de eliminar
+     * @param id long con el id del elemento a eliminar */
+    private void mostrarAlertEliminarZona(long id) {
+        AlertDialog alert = new AlertDialog.Builder(getContext()).create();
+
+        alert.setTitle(getString(R.string.default_alert_delete));
+        alert.setMessage(getString(R.string.default_alert_delete_confirmation) + " " + getString(R.string.fragment_machine_managment_alert_content) + " " + id + "?");
+
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final long status = datasource.deleteMaquina(id);
+
+                if (status <= 0)
+                    mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_deleting));
+                else {
+                    try {
+                        finish();
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Nothing
+            }
+        });
+
+        alert.show();
+    }
+
+    /** Muestra un Snackbar rojo con el mensaje de error personalizado
+     * @param message Strnig con el mensaje de error */
+    private void mostrarSnackbarError(String message) {
+
+        View parentView = getView();
+        Snackbar snackbar = Snackbar.make(
+                parentView,
+                Html.fromHtml("<font color=\"#FFFFFF\">" + message + "</font>"),
+                Snackbar.LENGTH_LONG
+        );
+
+        View snackbarView = snackbar.getView();
+
+        snackbarView.setBackgroundColor(getContext().getColor(R.color.design_default_color_error));
+
+        snackbar.show();
     }
 }
