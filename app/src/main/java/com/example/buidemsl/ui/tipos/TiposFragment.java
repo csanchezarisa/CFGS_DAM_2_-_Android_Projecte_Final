@@ -90,7 +90,7 @@ public class TiposFragment extends Fragment {
     /** Muestra un alert que permite editar o
      * añadir un tipo
      * @param id long con el id a editar. Si se
-     *           pasa un número negativo se añadirá*/
+     *           pasa un número negativo se añadirá */
     public void mostrarAlertTipo(long id) {
         Cursor tipo = datasource.getTipo(id);
 
@@ -118,7 +118,7 @@ public class TiposFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                long status;
+                final long status;
 
                 if (id < 0) {
                     status = datasource.insertTipo(input.getText().toString(), null);

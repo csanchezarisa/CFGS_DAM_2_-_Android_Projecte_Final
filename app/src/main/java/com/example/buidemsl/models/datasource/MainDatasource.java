@@ -246,7 +246,10 @@ public class MainDatasource {
         return clientes;
     }
 
-    public Cursor getClient(long id) {
+    /** Devuelve un cursor con el cliente deseado
+     * @param id long con el id del cliente a buscar
+     * @return Cursor con la query*/
+    public Cursor getCliente(long id) {
         Cursor cliente = dbR.query(
                 BuidemHelper.TABLE_CLIENT,
                 new String[]{
@@ -266,6 +269,71 @@ public class MainDatasource {
         return cliente;
     }
 
+    /** Permite actualizar la información de un cliente
+     * @param id ID del cliente a actualizar
+     * @param name Nombre del cliente
+     * @param surname Apellidos del cliente
+     * @param email Email del cliente
+     * @param phone Teléfono del cliente
+     * @return int con el número de filas afectadas*/
+    public int updateCliente(@NonNull long id, @NonNull String name, @NonNull String surname, @Nullable String email, @Nullable String phone) {
+        int rows = 0;
+
+        if (name != null && surname != null &&
+                name.length() > 0 && surname.length() > 0) {
+
+            ContentValues values = new ContentValues();
+            values.put(BuidemHelper.CLIENT_NOM, name);
+            values.put(BuidemHelper.CLIENT_COGNOMS, surname);
+            if (email != null)
+                values.put(BuidemHelper.CLIENT_EMAIL, email);
+            if (phone != null)
+                values.put(BuidemHelper.CLIENT_TELEFON, phone);
+
+            rows = dbW.update(
+                    BuidemHelper.TABLE_CLIENT,
+                    values,
+                    BuidemHelper.CLIENT_ID + " = " + id,
+                    null
+            );
+        }
+
+        return rows;
+    }
+
+    /** Permite insertar un nuevo registro en la tabla cliente
+     * @param name Nombre del cliente
+     * @param surname Apellidos del cliente
+     * @param email Email del cliente
+     * @param phone Teléfono del clietne
+     * @return long con el ID del nuevo registro*/
+    public long insertCliente(@NonNull String name, @NonNull String surname, @Nullable String email, @Nullable String phone) {
+        long id = 0;
+
+        if (name != null && surname != null &&
+            name.length() > 0 && surname.length() > 0) {
+
+            ContentValues values = new ContentValues();
+            values.put(BuidemHelper.CLIENT_NOM, name);
+            values.put(BuidemHelper.CLIENT_COGNOMS, surname);
+            if (email != null)
+                values.put(BuidemHelper.CLIENT_EMAIL, email);
+            if (phone != null)
+                values.put(BuidemHelper.CLIENT_TELEFON, phone);
+
+            id = dbW.insert(
+                    BuidemHelper.TABLE_CLIENT,
+                    null,
+                    values
+            );
+        }
+
+        return id;
+    }
+
+    /** Permite eliminar el cliente deseado
+     * @param id long con el id del cliente a eliminar
+     * @return int con el número de filas afectadas*/
     public int deleteCliente(long id) {
         int rows = dbW.delete(
                 BuidemHelper.TABLE_CLIENT,

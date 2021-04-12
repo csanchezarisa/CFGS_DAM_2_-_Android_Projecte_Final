@@ -50,7 +50,7 @@ public class ClientsListAdapter extends SimpleCursorAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                parentFragment.mostrarAlertCliente(getItemId(position));
             }
         });
 

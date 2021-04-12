@@ -2,6 +2,7 @@ package com.example.buidemsl.ui.clients;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class ClientsFragment extends Fragment {
@@ -56,27 +59,92 @@ public class ClientsFragment extends Fragment {
         adapter = new ClientsListAdapter(getContext(), R.layout.fragment_clients_list, datasource.getClientes(), from, to, 0, this);
         list.setAdapter(adapter);
 
+        FloatingActionButton btnAdd = (FloatingActionButton) root.findViewById(R.id.btn_add_cliente);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarAlertCliente(-1);
+            }
+        });
+
         mostrarEmptyText();
 
         return root;
     }
 
-    /** Muestra un Snackbar rojo con el mensaje de error personalizado
-     * @param message Strnig con el mensaje de error */
-    private void mostrarSnackbarError(String message) {
+    /** Muestra un alert que permite editar o
+     * añadir un cliente
+     * @param id long con el id a editar. Si se
+     *           pasa un número negativo se añadirá */
+    public void mostrarAlertCliente(long id) {
+        AlertDialog alert = new AlertDialog.Builder(getContext()).create();
 
-        View parentView = getView();
-        Snackbar snackbar = Snackbar.make(
-                parentView,
-                Html.fromHtml("<font color=\"#FFFFFF\">" + message + "</font>"),
-                Snackbar.LENGTH_LONG
-        );
+        // Se asigna la vista personalizada al AlertDialog con los inputs
+        // necesarios para crear un cliente
+        View dialogView = this.getLayoutInflater().inflate(R.layout.fragment_clients_manage_alert, null);
 
-        View snackbarView = snackbar.getView();
+        alert.setView(dialogView);
 
-        snackbarView.setBackgroundColor(getContext().getColor(R.color.design_default_color_error));
+        final EditText edtName = (EditText) dialogView.findViewById(R.id.edt_alert_client_name);
+        final EditText edtSurname = (EditText) dialogView.findViewById(R.id.edt_alert_client_surname);
+        final EditText edtEmail = (EditText) dialogView.findViewById(R.id.edt_alert_client_email);
+        final EditText edtPhone = (EditText) dialogView.findViewById(R.id.edt_alert_client_phone);
 
-        snackbar.show();
+        // ¿Se quiere crear o editar un cliente?
+        if (id < 0) {
+            alert.setTitle(R.string.fragment_clients_alert_add_title);
+        }
+        else {
+            alert.setTitle(getString(R.string.fragment_clients_alert_edit_title) + " " + id);
+
+            final Cursor cliente = datasource.getCliente(id);
+            cliente.moveToFirst();
+            edtName.setText(cliente.getString(cliente.getColumnIndexOrThrow(BuidemHelper.CLIENT_NOM)));
+            edtSurname.setText(cliente.getString(cliente.getColumnIndexOrThrow(BuidemHelper.CLIENT_COGNOMS)));
+            edtEmail.setText(cliente.getString(cliente.getColumnIndexOrThrow(BuidemHelper.CLIENT_EMAIL)));
+            edtPhone.setText(cliente.getString(cliente.getColumnIndexOrThrow(BuidemHelper.CLIENT_TELEFON)));
+
+            alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mostrarAlertCliente(id);
+                }
+            });
+        }
+
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // Se recupera el contenido de los inputs del alert
+                final String name = edtName.getText().toString();
+                final String surname = edtSurname.getText().toString();
+                final String email = edtEmail.getText().toString();
+                final String phone = edtPhone.getText().toString();
+
+                // Se prepara una variable para conocer el estado de la queries
+                long status;
+
+                // ¿Se tiene que crear o actualizar un cliente?
+                if (id < 0) {
+                    status = datasource.insertCliente(name, surname, email, phone);
+                }
+                else {
+                    status = datasource.updateCliente(id, name, surname, email, phone);
+                }
+
+                refreshList();
+            }
+        });
+
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alert.show();
     }
 
     /** Muestra un alert de confirmación antes de eliminar
@@ -103,6 +171,24 @@ public class ClientsFragment extends Fragment {
         });
 
         alert.show();
+    }
+
+    /** Muestra un Snackbar rojo con el mensaje de error personalizado
+     * @param message Strnig con el mensaje de error */
+    private void mostrarSnackbarError(String message) {
+
+        View parentView = getView();
+        Snackbar snackbar = Snackbar.make(
+                parentView,
+                Html.fromHtml("<font color=\"#FFFFFF\">" + message + "</font>"),
+                Snackbar.LENGTH_LONG
+        );
+
+        View snackbarView = snackbar.getView();
+
+        snackbarView.setBackgroundColor(getContext().getColor(R.color.design_default_color_error));
+
+        snackbar.show();
     }
 
     /** Muestra un Snackbar verde con un mensaje de éxito
