@@ -11,13 +11,13 @@
     <string name="menu_client">Clients</string>
     <string name="menu_zonas">Zones</string>
     <string name="menu_tipos">Types</string>
-    <string name="fragment_zonas_alert_edit_title">Zone</string>
-    <string name="fragment_zonas_alert_add_title">New zone</string>
-    <string name="fragment_zonas_alert_add_description">Description</string>
     <string name="default_alert_accept">Accept</string>
     <string name="default_alert_cancel">Cancel</string>
     <string name="default_alert_delete">Delete</string>
     <string name="default_alert_delete_confirmation">Are you sure that you want to delete</string>
+    <string name="fragment_zonas_alert_edit_title">Zone</string>
+    <string name="fragment_zonas_alert_add_title">New zone</string>
+    <string name="fragment_zonas_alert_add_description">Description</string>
     <string name="fragment_zonas_snackbar_successfuly_deleted">Deleted successfuly</string>
     <string name="fragment_zonas_snackbar_successfuly_updated">Updated successfuly</string>
     <string name="fragment_zonas_snackbar_successfuly_inserted">Inserted successfuly</string>
@@ -26,6 +26,9 @@
     <string name="fragment_zonas_snackbar_error_deleting">There was an error deleting\nPlease try again</string>
     <string name="fragment_zonas_empty_list">Oops!\nThere isn\'t any zone.\nYou can create one by pressing the Add button.</string>
     <string name="fragment_tipos_empty_list">Oops!\nThere isn\'t any type.\nYou can create one by pressing the Add button.</string>
+    <string name="fragment_tipos_snackbar_color_updated_successfuly">The color was updated successfuly</string>
+    <string name="fragment_tipos_snackbar_color_updated_error">There was an error updating the color.\nPlease try it again</string>
+    <string name="fragment_tipos_snackbar_error_deleting">There was an error deleting\nPlease try again</string>
     <string name="fragment_clients_empty_list">Oops!\nThere isn\'t any client.\nYou can create one by pressing the Add button.</string>
     <string name="fragment_clients_alert_edit_title">Client</string>
     <string name="fragment_clients_alert_add_title">New client</string>
@@ -33,7 +36,9 @@
     <string name="fragment_clients_alert_manage_surname">Surname</string>
     <string name="fragment_clients_alert_manage_email">Email</string>
     <string name="fragment_clients_alert_manage_phone">Phone</string>
-    <string name="fragment_tipos_snackbar_color_updated_successfuly">The color was updated successfuly</string>
-    <string name="fragment_tipos_snackbar_color_updated_error">There was an error updating the color.\nPlease try it again</string>
+    <string name="fragment_clients_snackbar_success_default">Action completed successfuly</string>
+    <string name="fragment_clients_snackbar_error_inserting">There was an error inserting that client\nPlease try again</string>
+    <string name="fragment_clients_snackbar_error_updating">There was an error updating\nPlease try again</string>
+    <string name="fragment_clients_snackbar_error_deleting">There was an error deleting\nPlease try again</string>
     <string name="menu_maps">Maps</string>
 </resources>

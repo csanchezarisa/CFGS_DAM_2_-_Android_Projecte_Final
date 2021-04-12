@@ -183,7 +183,13 @@ public class ZonasFragment extends Fragment {
         alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                long status = datasource.deleteZona(id);
+                final long status = datasource.deleteZona(id);
+
+                if (status > 0)
+                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_deleted));
+                else
+                    mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_deleting));
+
                 refreshList();
             }
         });

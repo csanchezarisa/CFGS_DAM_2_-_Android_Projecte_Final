@@ -308,7 +308,7 @@ public class MainDatasource {
      * @param phone Teléfono del clietne
      * @return long con el ID del nuevo registro*/
     public long insertCliente(@NonNull String name, @NonNull String surname, @Nullable String email, @Nullable String phone) {
-        long id = 0;
+        long id = -1;
 
         if (name != null && surname != null &&
             name.length() > 0 && surname.length() > 0) {

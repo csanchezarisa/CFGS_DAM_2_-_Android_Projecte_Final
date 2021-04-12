@@ -107,7 +107,7 @@ public class ClientsFragment extends Fragment {
             alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    mostrarAlertCliente(id);
+                    mostrarAlertEliminarCliente(id);
                 }
             });
         }
@@ -133,6 +133,16 @@ public class ClientsFragment extends Fragment {
                     status = datasource.updateCliente(id, name, surname, email, phone);
                 }
 
+                // Ha ido bien
+                if (status > 0)
+                    mostrarSnackbarSuccess(getString(R.string.fragment_clients_snackbar_success_default));
+                // No se ha hecho el update
+                else if (status == 0)
+                    mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_updating));
+                // No se ha podido crear
+                else
+                    mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_inserting));
+
                 refreshList();
             }
         });
@@ -140,7 +150,7 @@ public class ClientsFragment extends Fragment {
         alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                // Nothing
             }
         });
 
@@ -159,6 +169,12 @@ public class ClientsFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 long status = datasource.deleteCliente(id);
+
+                if (status > 0)
+                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_deleted));
+                else
+                    mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_deleting));
+
                 refreshList();
             }
         });
