@@ -343,4 +343,20 @@ public class MainDatasource {
 
         return rows;
     }
+
+
+    /* .: 4 - MAQUINAS :. */
+    public Cursor getMaquinas() {
+        final String sqlCode =
+                "SELECT *" +
+                " FROM " + BuidemHelper.TABLE_MAQUINA  +
+                " INNER JOIN " + BuidemHelper.TABLE_CLIENT +
+                " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT + " = " + BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_ID +
+                " INNER JOIN " + BuidemHelper.TABLE_ZONA +
+                " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA + " = " + BuidemHelper.TABLE_ZONA + "." + BuidemHelper.ZONA_ID +
+                " INNER JOIN " + BuidemHelper.TABLE_TIPUS +
+                " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS + " = " + BuidemHelper.TABLE_TIPUS + "." + BuidemHelper.TIPUS_ID;
+
+        return dbR.rawQuery(sqlCode, null);
+    }
 }
