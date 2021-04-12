@@ -1,4 +1,4 @@
-package com.example.buidemsl.ui;
+package com.example.buidemsl.ui.maps;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
