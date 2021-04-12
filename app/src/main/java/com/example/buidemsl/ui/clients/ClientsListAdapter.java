@@ -27,8 +27,8 @@ public class ClientsListAdapter extends SimpleCursorAdapter {
 
         Cursor client = (Cursor) getItem(position);
 
-        final String email = client.getString(client.getColumnIndexOrThrow(BuidemHelper.CLIENT_EMAIL));
-        final String phone = client.getString(client.getColumnIndexOrThrow(BuidemHelper.CLIENT_TELEFON));
+        final String EMAIL = client.getString(client.getColumnIndexOrThrow(BuidemHelper.CLIENT_EMAIL));
+        final String PHONE = client.getString(client.getColumnIndexOrThrow(BuidemHelper.CLIENT_TELEFON));
 
         ImageView btnEmail = (ImageView) view.findViewById(R.id.list_item_client_img_email);
         ImageView btnPhone = (ImageView) view.findViewById(R.id.list_item_client_img_phone);
@@ -44,6 +44,21 @@ public class ClientsListAdapter extends SimpleCursorAdapter {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                parentFragment.mostrarAlertEliminarCliente(getItemId(position));
+                return true;
             }
         });
 

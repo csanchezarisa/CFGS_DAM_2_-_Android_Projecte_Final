@@ -245,4 +245,34 @@ public class MainDatasource {
 
         return clientes;
     }
+
+    public Cursor getClient(long id) {
+        Cursor cliente = dbR.query(
+                BuidemHelper.TABLE_CLIENT,
+                new String[]{
+                        BuidemHelper.CLIENT_ID,
+                        BuidemHelper.CLIENT_NOM,
+                        BuidemHelper.CLIENT_COGNOMS,
+                        BuidemHelper.CLIENT_EMAIL,
+                        BuidemHelper.CLIENT_TELEFON
+                },
+                BuidemHelper.CLIENT_ID + " = " + id,
+                null,
+                null,
+                null,
+                null
+        );
+
+        return cliente;
+    }
+
+    public int deleteCliente(long id) {
+        int rows = dbW.delete(
+                BuidemHelper.TABLE_CLIENT,
+                BuidemHelper.CLIENT_ID + " = " + id,
+                null
+        );
+
+        return rows;
+    }
 }
