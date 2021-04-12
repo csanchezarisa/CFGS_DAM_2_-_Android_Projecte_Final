@@ -62,7 +62,7 @@ public class ZonasFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                openMap(0);
+                openMap(id);
             }
         });
 
@@ -240,8 +240,12 @@ public class ZonasFragment extends Fragment {
         mostrarEmptyText();
     }
 
+    /** Navega hasta el fragment del mapa pasando
+     * el ID de la zona seleccionada como parámetro
+     * @param id long con el ID de la zona a mostrar */
     private void openMap(long id) {
         Bundle bundle = new Bundle();
+        bundle.putString("column_name", BuidemHelper.TABLE_ZONA);
         bundle.putLong("id", id);
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_zonas_to_mapsFragment, bundle);
     }

@@ -46,7 +46,7 @@ public class TiposListAdapter extends SimpleCursorAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                parentFragment.openMap(getItemId(position));
             }
         });
 

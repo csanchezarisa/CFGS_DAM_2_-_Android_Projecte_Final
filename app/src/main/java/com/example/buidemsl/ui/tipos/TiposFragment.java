@@ -19,6 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
@@ -250,5 +252,15 @@ public class TiposFragment extends Fragment {
     private void refreshList() {
         adapter.changeCursor(datasource.getTipos());
         mostrarEmptyText();
+    }
+
+    /** Navega hasta el fragment del mapa pasando
+     * el ID del tipo seleccionada como parámetro
+     * @param id long con el ID del tipo a mostrar */
+    public void openMap(long id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("column_name", BuidemHelper.TABLE_TIPUS);
+        bundle.putLong("id", id);
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_tipos_to_mapsFragment, bundle);
     }
 }

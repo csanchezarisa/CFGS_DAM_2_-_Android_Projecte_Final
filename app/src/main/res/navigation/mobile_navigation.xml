@@ -29,7 +29,15 @@
         android:id="@+id/nav_tipos"
         android:name="com.example.buidemsl.ui.tipos.TiposFragment"
         android:label="@string/menu_tipos"
-        tools:layout="@layout/fragment_tipos" />
+        tools:layout="@layout/fragment_tipos" >
+        <action
+            android:id="@+id/action_nav_tipos_to_mapsFragment"
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.buidemsl.ui.maps.MapsFragment"
