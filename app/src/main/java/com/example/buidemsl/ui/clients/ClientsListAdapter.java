@@ -2,9 +2,15 @@ package com.example.buidemsl.ui.clients;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.buidemsl.R;
+import com.example.buidemsl.models.BuidemHelper;
 
 public class ClientsListAdapter extends SimpleCursorAdapter {
 
@@ -15,4 +21,32 @@ public class ClientsListAdapter extends SimpleCursorAdapter {
         this.parentFragment = (ClientsFragment) parentFragment;
     }
 
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view = super.getView(position, convertView, parent);
+
+        Cursor client = (Cursor) getItem(position);
+
+        final String email = client.getString(client.getColumnIndexOrThrow(BuidemHelper.CLIENT_EMAIL));
+        final String phone = client.getString(client.getColumnIndexOrThrow(BuidemHelper.CLIENT_TELEFON));
+
+        ImageView btnEmail = (ImageView) view.findViewById(R.id.list_item_client_img_email);
+        ImageView btnPhone = (ImageView) view.findViewById(R.id.list_item_client_img_phone);
+
+        btnEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        return view;
+    }
 }
