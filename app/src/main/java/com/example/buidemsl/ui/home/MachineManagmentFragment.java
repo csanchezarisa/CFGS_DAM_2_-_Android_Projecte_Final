@@ -12,10 +12,15 @@ import com.example.buidemsl.R;
 
 public class MachineManagmentFragment extends Fragment {
 
+    private long id = -1;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_machine_managment, container, false);
+
+        if (getArguments() != null)
+            id = getArguments().getLong("id");
 
         return root;
     }

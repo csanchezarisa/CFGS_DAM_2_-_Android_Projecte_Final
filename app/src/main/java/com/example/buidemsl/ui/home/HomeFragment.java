@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.buidemsl.R;
+import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -23,6 +25,8 @@ public class HomeFragment extends Fragment {
 
     private TextView listEmptyText;
     private ImageView listEmptyImg;
+
+    private MachineOrderByEnum orderByEnum = MachineOrderByEnum.CLIENT_NAME;
 
     private String[] from = new String[]{
 
@@ -42,14 +46,14 @@ public class HomeFragment extends Fragment {
         listEmptyImg = (ImageView) root.findViewById(R.id.img_maquinas_empty);
 
         list = root.findViewById(R.id.list_maquines);
-        adapter = new MachineListAdapter(getContext(), R.layout.fragment_home_list, datasource.getMaquinas(), from, to, 0, this);
+        adapter = new MachineListAdapter(getContext(), R.layout.fragment_home_list, datasource.getMaquinas(orderByEnum.label), from, to, 0, this);
         list.setAdapter(adapter);
 
         FloatingActionButton btnAdd = root.findViewById(R.id.btn_add_maquina);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                openMachineManagement(-1);
             }
         });
 
@@ -71,5 +75,33 @@ public class HomeFragment extends Fragment {
             listEmptyImg.setVisibility(View.VISIBLE);
             listEmptyText.setVisibility(View.VISIBLE);
         }
+    }
+
+
+    /** Actualiza el contenidoq que se muestra en la lista */
+    private void refreshList() {
+        adapter.changeCursor(datasource.getZonas());
+        mostrarEmptyText();
+    }
+
+    /** Navega hasta el fragment para gestionar
+     * una maquina
+     * @param id long con el ID de la maquina a
+     *           gestionar. En caso de querer crear
+     *           una hay que pasar un número negativo*/
+    private void openMachineManagement(long id) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("id", id);
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_machineManagmentFragment, bundle);
+    }
+
+    /** Navega hasta el fragment del mapa pasando
+     * el ID de la maquina seleccionada como parámetro
+     * @param id long con el ID de la maquina a mostrar */
+    public void openMap(long id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("column_name", BuidemHelper.TABLE_MAQUINA);
+        bundle.putLong("id", id);
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_mapsFragment, bundle);
     }
 }

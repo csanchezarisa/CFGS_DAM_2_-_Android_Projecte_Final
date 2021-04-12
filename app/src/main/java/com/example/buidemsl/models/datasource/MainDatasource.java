@@ -346,8 +346,8 @@ public class MainDatasource {
 
 
     /* .: 4 - MAQUINAS :. */
-    public Cursor getMaquinas() {
-        final String sqlCode =
+    public Cursor getMaquinas(@Nullable String orderBy) {
+        String sqlCode =
                 "SELECT *" +
                 " FROM " + BuidemHelper.TABLE_MAQUINA  +
                 " INNER JOIN " + BuidemHelper.TABLE_CLIENT +
@@ -356,6 +356,9 @@ public class MainDatasource {
                 " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA + " = " + BuidemHelper.TABLE_ZONA + "." + BuidemHelper.ZONA_ID +
                 " INNER JOIN " + BuidemHelper.TABLE_TIPUS +
                 " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS + " = " + BuidemHelper.TABLE_TIPUS + "." + BuidemHelper.TIPUS_ID;
+
+        if (orderBy != null && orderBy.length() > 0)
+            sqlCode += " ORDER BY " + orderBy;
 
         return dbR.rawQuery(sqlCode, null);
     }

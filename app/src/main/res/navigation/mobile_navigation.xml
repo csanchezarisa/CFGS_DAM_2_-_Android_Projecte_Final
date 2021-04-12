@@ -9,7 +9,22 @@
         android:id="@+id/nav_home"
         android:name="com.example.buidemsl.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_mapsFragment"
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+            android:id="@+id/action_nav_home_to_machineManagmentFragment"
+            app:destination="@id/machineManagmentFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_close_exit"/>
+    </fragment>
 
     <fragment
         android:id="@+id/nav_zonas"
@@ -48,4 +63,9 @@
         android:name="com.example.buidemsl.ui.clients.ClientsFragment"
         android:label="@string/menu_client"
         tools:layout="@layout/fragment_clients" />
+    <fragment
+        android:id="@+id/machineManagmentFragment"
+        android:name="com.example.buidemsl.ui.home.MachineManagmentFragment"
+        android:label="@string/fragment_machine_managment_title"
+        tools:layout="@layout/fragment_machine_managment" />
 </navigation>
