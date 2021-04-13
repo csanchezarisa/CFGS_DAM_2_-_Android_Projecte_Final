@@ -6,7 +6,8 @@
     <string name="nav_header_subtitle">admin@buidem.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
+    <string name="action_filter">Filter</string>
+    s<string name="action_order_by">Order by</string>
     <string name="menu_home">Home</string>
     <string name="menu_client">Clients</string>
     <string name="menu_zonas">Zones</string>
@@ -14,8 +15,17 @@
     <string name="default_alert_accept">Accept</string>
     <string name="default_alert_cancel">Cancel</string>
     <string name="default_alert_delete">Delete</string>
+    <string name="default_alert_clear">Clear</string>
     <string name="default_alert_delete_confirmation">Are you sure that you want to delete</string>
     <string name="fragment_home_empty_list">Oops!\nThere isn\'t any machine.\nYou can create one by pressing the Add button.</string>
+    <string name="fragment_home_alert_order_by_title">Order by</string>
+    <string-array name="fragment_home_alert_order_by_content">
+        <item>Client name</item>
+        <item>Zone</item>
+        <item>Town</item>
+        <item>Direction</item>
+        <item>Last review date</item>
+    </string-array>
     <string name="fragment_zonas_alert_edit_title">Zone</string>
     <string name="fragment_zonas_alert_add_title">New zone</string>
     <string name="fragment_zonas_alert_add_description">Description</string>

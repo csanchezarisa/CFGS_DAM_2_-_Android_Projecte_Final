@@ -1,8 +1,9 @@
-package com.example.buidemsl;
+package com.example.buidemsl.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
 
+import com.example.buidemsl.R;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;

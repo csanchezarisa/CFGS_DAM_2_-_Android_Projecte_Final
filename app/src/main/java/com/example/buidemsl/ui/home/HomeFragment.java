@@ -1,12 +1,18 @@
 package com.example.buidemsl.ui.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -54,6 +60,8 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        setHasOptionsMenu(true);
+
         datasource = new MainDatasource(getContext());
 
         listEmptyText = (TextView) root.findViewById(R.id.txt_maquinas_empty);
@@ -64,16 +72,32 @@ public class HomeFragment extends Fragment {
         list.setAdapter(adapter);
 
         FloatingActionButton btnAdd = root.findViewById(R.id.btn_add_maquina);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMachineManagement(-1);
-            }
-        });
+        btnAdd.setOnClickListener(v -> openMachineManagement(-1));
 
         mostrarEmptyText();
 
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_home_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btn_menu_filter:
+                return true;
+
+            case R.id.btn_menu_order:
+                mostrarAlertOrderBy();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /** Revisa si en la lista hay elementos o no.
@@ -91,10 +115,60 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /** Muestra un alert que permite seleccionar el Order By de la lista */
+    private void mostrarAlertOrderBy() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+
+        alert.setTitle(R.string.fragment_home_alert_order_by_title);
+
+        final int[] selectedItem = {orderByEnum.ordinal()};
+
+        alert.setSingleChoiceItems(R.array.fragment_home_alert_order_by_content, selectedItem[0], (dialog, which) -> selectedItem[0] = which);
+
+        alert.setPositiveButton(R.string.default_alert_accept, (dialog, which) -> {
+            switch (selectedItem[0]) {
+                case 1:
+                    orderByEnum = MachineOrderByEnum.ZONE;
+                    break;
+
+                case 2:
+                    orderByEnum = MachineOrderByEnum.TOWN;
+                    break;
+
+                case 3:
+                    orderByEnum = MachineOrderByEnum.DIRECTION;
+                    break;
+
+                case 4:
+                    orderByEnum = MachineOrderByEnum.LAST_REV_DATE;
+                    break;
+
+                default:
+                    orderByEnum = MachineOrderByEnum.CLIENT_NAME;
+            }
+
+            refreshList();
+        });
+
+        alert.setNegativeButton(R.string.default_alert_cancel, (dialog, which) -> {
+            // Nothing
+        });
+
+        alert.setNeutralButton(R.string.default_alert_clear, (dialog, which) -> {
+            orderByEnum = MachineOrderByEnum.CLIENT_NAME;
+            refreshList();
+        });
+
+        alert.show();
+    }
+
+    private void mostrarAlertFilter() {
+
+    }
 
     /** Actualiza el contenidoq que se muestra en la lista */
     private void refreshList() {
-        adapter.changeCursor(datasource.getZonas());
+        adapter.changeCursor(datasource.getMaquinas(orderByEnum.label));
         mostrarEmptyText();
     }
 
