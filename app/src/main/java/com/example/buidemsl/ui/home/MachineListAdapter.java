@@ -89,7 +89,7 @@ public class MachineListAdapter extends SimpleCursorAdapter {
         });
 
         view.setOnLongClickListener(v -> {
-            parentFragment.openMachineManagement(maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ID)));
+            parentFragment.openMachineManagement(getItemId(position));
             return true;
         });
 

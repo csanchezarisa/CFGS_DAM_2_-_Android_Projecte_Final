@@ -210,20 +210,20 @@ public class MachineManagmentFragment extends Fragment {
                 Cursor maquina = datasource.getMaquina(id);
                 maquina.moveToFirst();
 
-                final String serial = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE));
-                final String direction = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ADRECA));
-                final String postalCode = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CODI_POSTAL));
-                final String town = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_POBLACIO));
+                final String serial = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_NUMERO_SERIE));
+                final String direction = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ADRECA));
+                final String postalCode = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_CODI_POSTAL));
+                final String town = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_POBLACIO));
                 Date date;
                 try {
-                    date = new Date(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ULTIMA_REVISIO)), true);
+                    date = new Date(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ULTIMA_REVISIO)), true);
                 }
                 catch (Exception e) {
                     date = null;
                 }
-                final long client = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT));
-                final long zone = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA));
-                final long type = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS));
+                final long client = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_CLIENT));
+                final long zone = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ZONA));
+                final long type = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_TIPUS));
 
                 edtSerial.setText(serial);
                 edtDirection.setText(direction);
