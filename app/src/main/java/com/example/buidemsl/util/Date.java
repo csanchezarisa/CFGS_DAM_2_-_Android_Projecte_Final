@@ -39,4 +39,16 @@ public class Date {
     public static String dosDigits(int number) {
         return (number < 9) ? ("0" + number) : String.valueOf(number);
     }
+
+    public int getDay() {
+        return Integer.parseInt(this.day);
+    }
+
+    public int getYear() {
+        return Integer.parseInt(this.year);
+    }
+
+    public int getMonth() {
+        return Integer.parseInt(this.month) - 1;
+    }
 }

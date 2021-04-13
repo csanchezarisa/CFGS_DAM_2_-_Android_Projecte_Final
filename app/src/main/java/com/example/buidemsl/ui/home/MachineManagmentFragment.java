@@ -1,10 +1,12 @@
 package com.example.buidemsl.ui.home;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -13,12 +15,11 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
@@ -91,17 +92,28 @@ public class MachineManagmentFragment extends Fragment {
         dropType = (Spinner) root.findViewById(R.id.drop_machine_tipus);
         dropZone = (Spinner) root.findViewById(R.id.drop_machine_zona);
 
-        btnAdd.setOnClickListener((View v) -> manageMachine(CREATE_ACTION));
+        btnAdd.setOnClickListener(v -> manageMachine(CREATE_ACTION));
 
-        btnEdit.setOnClickListener((View v) -> manageMachine(EDIT_ACTION));
+        btnEdit.setOnClickListener(v -> manageMachine(EDIT_ACTION));
 
-        btnDelete.setOnClickListener((View v) -> mostrarAlertEliminarZona(id));
+        btnDelete.setOnClickListener(v -> mostrarAlertEliminarZona(id));
 
-        btnAddClient.setOnClickListener((View v) -> navigateFragment(0, NAVIGATE_CLIENTS));
+        btnAddClient.setOnClickListener(v -> navigateFragment(0, NAVIGATE_CLIENTS));
 
-        btnAddType.setOnClickListener((View v) -> navigateFragment(0, NAVIGATE_TYPES));
+        btnAddType.setOnClickListener(v -> navigateFragment(0, NAVIGATE_TYPES));
 
-        btnAddZone.setOnClickListener((View v) -> navigateFragment(0, NAVIGATE_ZONES));
+        btnAddZone.setOnClickListener(v -> navigateFragment(0, NAVIGATE_ZONES));
+
+        edtLastRevision.setOnClickListener(v -> {
+            Date date;
+            try {
+                date = new Date(edtLastRevision.getText().toString(), false);
+            }
+            catch (Exception e) {
+                date = null;
+            }
+            mostrarDatePickerDialog(date);
+        });
 
         setSpinnerAdapters();
 
@@ -230,7 +242,7 @@ public class MachineManagmentFragment extends Fragment {
                 edtPostalCode.setText(postalCode);
                 edtTown.setText(town);
                 if (date != null)
-                    edtLastRevision.setText(date.getSQLDate());
+                    edtLastRevision.setText(date.getEuropeanDate());
 
                 dropClient.setSelection(CursorsUtil.getItemPosition(dropClient.getAdapter(), client));
                 dropZone.setSelection(CursorsUtil.getItemPosition(dropZone.getAdapter(), zone));
@@ -293,6 +305,25 @@ public class MachineManagmentFragment extends Fragment {
         });
 
         alert.show();
+    }
+
+    /** Muestra un DatePickerDialog que permite seleccionar
+     * una fecha
+     * @param date Date con la fecha que se quiere mostrar
+     *             por defecto. Null si no se quiere mostrar
+     *             una fecha por defecto*/
+    private void mostrarDatePickerDialog(@Nullable Date date) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext());
+
+        if (date != null)
+            datePickerDialog.updateDate(date.getYear(), date.getMonth(), date.getDay());
+
+        datePickerDialog.setOnDateSetListener((view, year, month, dayOfMonth) -> {
+            final Date selectedDate = new Date(dayOfMonth, month, year);
+            edtLastRevision.setText(selectedDate.getEuropeanDate());
+        });
+
+        datePickerDialog.show();
     }
 
     /** Muestra un Snackbar rojo con el mensaje de error personalizado

@@ -140,7 +140,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:layout_weight="1"
+                    android:clickable="true"
                     android:ems="10"
+                    android:focusable="false"
                     android:hint="@string/fragment_machine_managment_last_revision"
                     android:inputType="date" />
             </LinearLayout>

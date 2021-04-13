@@ -77,7 +77,7 @@ public class MachineListAdapter extends SimpleCursorAdapter {
         // Se intenta recuperar la fecha. Si hay algún error (porque no está informada) se ocultan los TextView
         try {
             Date date = new Date(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ULTIMA_REVISIO)), true);
-            contentText.setText(date.getSQLDate());
+            contentText.setText(date.getEuropeanDate());
         }
         catch (Exception e) {
             titleText.setVisibility(View.GONE);
