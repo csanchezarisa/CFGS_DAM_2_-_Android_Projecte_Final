@@ -51,9 +51,13 @@ public class BuidemHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // Activa las CONSTRAINTS de las Foreign Key
+        String sqlCode =
+                "PRAGMA foreign_keys=ON;";
+        db.execSQL(sqlCode);
 
         // Creació de la taula CLIENT
-        String sqlCode =
+        sqlCode =
                 "CREATE TABLE " + TABLE_CLIENT + "(" +
                 CLIENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 CLIENT_NOM + " TEXT NOT NULL," +
@@ -93,19 +97,27 @@ public class BuidemHelper extends SQLiteOpenHelper {
                 // Foreign key amb la taula CLIENT
                 "FOREIGN KEY (" + MAQUINA_CLIENT + ") REFERENCES " + TABLE_CLIENT + '(' + CLIENT_ID + ')' +
                     "ON DELETE RESTRICT " +
-                    "ON UPDATE CASCADE, " +
+                    "ON UPDATE RESTRICT, " +
 
                 // Foreign key amb la taula TIPUS
                 "FOREIGN KEY (" + MAQUINA_TIPUS + ") REFERENCES " + TABLE_TIPUS + '(' + TIPUS_ID + ')' +
                     "ON DELETE RESTRICT " +
-                    "ON UPDATE CASCADE, " +
+                    "ON UPDATE RESTRICT, " +
 
                 // Foreign key amb la taula ZONA
                 "FOREIGN KEY (" + MAQUINA_ZONA + ") REFERENCES " + TABLE_ZONA + '(' + ZONA_ID + ')' +
                     "ON DELETE RESTRICT " +
-                    "ON UPDATE CASCADE);";
+                    "ON UPDATE RESTRICT);";
         db.execSQL(sqlCode);
 
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
     }
 
     @Override

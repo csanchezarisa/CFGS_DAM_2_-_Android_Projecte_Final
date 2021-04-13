@@ -118,12 +118,18 @@ public class MainDatasource {
      * @return int con el número de
      * filas afectadas*/
     public int deleteZona(long id) {
+        int rows;
 
-        int rows = dbW.delete(
-                BuidemHelper.TABLE_ZONA,
-                BuidemHelper.ZONA_ID + " = " + id,
-                null
-        );
+        try {
+            rows = dbW.delete(
+                    BuidemHelper.TABLE_ZONA,
+                    BuidemHelper.ZONA_ID + " = " + id,
+                    null
+            );
+        }
+        catch (Exception e) {
+            rows = 0;
+        }
 
         return rows;
     }
@@ -212,12 +218,18 @@ public class MainDatasource {
      * @return int con el número de
      * filas afectadas*/
     public int deleteTipo(long id) {
+        int rows;
 
-        int rows = dbW.delete(
-                BuidemHelper.TABLE_TIPUS,
-                BuidemHelper.TIPUS_ID + " = " + id,
-                null
-        );
+        try {
+            rows = dbW.delete(
+                    BuidemHelper.TABLE_TIPUS,
+                    BuidemHelper.TIPUS_ID + " = " + id,
+                    null
+            );
+        }
+        catch (Exception e) {
+            rows = 0;
+        }
 
         return rows;
     }
@@ -336,11 +348,18 @@ public class MainDatasource {
      * @param id long con el id del cliente a eliminar
      * @return int con el número de filas afectadas*/
     public int deleteCliente(long id) {
-        int rows = dbW.delete(
-                BuidemHelper.TABLE_CLIENT,
-                BuidemHelper.CLIENT_ID + " = " + id,
-                null
-        );
+        int rows;
+
+        try {
+            rows = dbW.delete(
+                    BuidemHelper.TABLE_CLIENT,
+                    BuidemHelper.CLIENT_ID + " = " + id,
+                    null
+            );
+        }
+        catch (Exception e) {
+            rows = 0;
+        }
 
         return rows;
     }
@@ -504,11 +523,18 @@ public class MainDatasource {
      *           a eliminar
      * @return int con el número de filas afectadas */
     public int deleteMaquina(long id) {
-        int rows = dbW.delete(
-                BuidemHelper.TABLE_MAQUINA,
-                BuidemHelper.MAQUINA_ID + " = " + id,
-                null
-        );
+        int rows;
+
+        try {
+            rows = dbW.delete(
+                    BuidemHelper.TABLE_MAQUINA,
+                    BuidemHelper.MAQUINA_ID + " = " + id,
+                    null
+            );
+        }
+        catch (Exception e) {
+            rows = 0;
+        }
 
         return rows;
     }

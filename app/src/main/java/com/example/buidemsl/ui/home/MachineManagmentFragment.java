@@ -177,6 +177,12 @@ public class MachineManagmentFragment extends Fragment {
         if (status > 0) {
             finish();
         }
+        else if (status == 0) {
+            mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_updating));
+        }
+        else {
+            mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_inserting));
+        }
     }
 
     /** Finaliza el fragment */
