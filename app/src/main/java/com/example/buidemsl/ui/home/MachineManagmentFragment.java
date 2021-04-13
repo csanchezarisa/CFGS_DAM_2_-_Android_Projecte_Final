@@ -13,14 +13,17 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
+import com.example.buidemsl.util.CursorsUtil;
 import com.example.buidemsl.util.Date;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -124,9 +127,9 @@ public class MachineManagmentFragment extends Fragment {
                 BuidemHelper.ZONA_DESCRIPCIO
         };
 
-        final SimpleCursorAdapter cAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_spinner_item, datasource.getClientes(), cFrom, to, 0);
-        final SimpleCursorAdapter tAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_spinner_item, datasource.getTipos(), tFrom, to, 0);
-        final SimpleCursorAdapter zAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_spinner_item, datasource.getZonas(), zFrom, to, 0);
+        SimpleCursorAdapter cAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_spinner_item, datasource.getClientes(), cFrom, to, 0);
+        SimpleCursorAdapter tAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_spinner_item, datasource.getTipos(), tFrom, to, 0);
+        SimpleCursorAdapter zAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_spinner_item, datasource.getZonas(), zFrom, to, 0);
 
         cAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -201,15 +204,31 @@ public class MachineManagmentFragment extends Fragment {
                 Cursor maquina = datasource.getMaquina(id);
                 maquina.moveToFirst();
 
-                edtSerial.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE)));
-                edtDirection.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ADRECA)));
-                edtPostalCode.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CODI_POSTAL)));
-                edtTown.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_POBLACIO)));
-                edtLastRevision.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ULTIMA_REVISIO)));
+                final String serial = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE));
+                final String direction = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ADRECA));
+                final String postalCode = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CODI_POSTAL));
+                final String town = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_POBLACIO));
+                Date date;
+                try {
+                    date = new Date(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ULTIMA_REVISIO)), true);
+                }
+                catch (Exception e) {
+                    date = null;
+                }
+                final long client = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT));
+                final long zone = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA));
+                final long type = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS));
 
-                dropClient.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT)) - 1);
-                dropZone.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA)) - 1);
-                dropType.setSelection((int) maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS)) - 1);
+                edtSerial.setText(serial);
+                edtDirection.setText(direction);
+                edtPostalCode.setText(postalCode);
+                edtTown.setText(town);
+                if (date != null)
+                    edtLastRevision.setText(date.getSQLDate());
+
+                dropClient.setSelection(CursorsUtil.getItemPosition(dropClient.getAdapter(), client));
+                dropZone.setSelection(CursorsUtil.getItemPosition(dropZone.getAdapter(), zone));
+                dropType.setSelection(CursorsUtil.getItemPosition(dropType.getAdapter(), type));
             }
             catch (Exception e) {
                 mostrarSnackbarError(e.toString());

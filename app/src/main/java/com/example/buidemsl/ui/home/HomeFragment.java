@@ -29,11 +29,25 @@ public class HomeFragment extends Fragment {
     private MachineOrderByEnum orderByEnum = MachineOrderByEnum.CLIENT_NAME;
 
     private String[] from = new String[]{
-
+            BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE,
+            BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ADRECA,
+            BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CODI_POSTAL,
+            BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_POBLACIO,
+            BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_TELEFON,
+            BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_EMAIL,
+            BuidemHelper.TABLE_TIPUS + "." + BuidemHelper.TIPUS_DESCRIPCIO,
+            BuidemHelper.TABLE_ZONA + "." + BuidemHelper.ZONA_DESCRIPCIO
     };
 
     private int[] to = new int[]{
-
+            R.id.txt_list_item_maquina_serial,
+            R.id.txt_list_item_maquina_adreca,
+            R.id.txt_list_item_maquina_codi_postal,
+            R.id.txt_list_item_maquina_poblacio,
+            R.id.txt_list_item_maquina_client_phone,
+            R.id.txt_list_item_maquina_client_email,
+            R.id.txt_list_item_maquina_tipus,
+            R.id.txt_list_item_maquina_zona
     };
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -89,7 +103,7 @@ public class HomeFragment extends Fragment {
      * @param id long con el ID de la maquina a
      *           gestionar. En caso de querer crear
      *           una hay que pasar un número negativo*/
-    private void openMachineManagement(long id) {
+    public void openMachineManagement(long id) {
         Bundle bundle = new Bundle();
         bundle.putLong("id", id);
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_machineManagmentFragment, bundle);

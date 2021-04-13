@@ -347,6 +347,29 @@ public class MainDatasource {
 
 
     /* .: 4 - MAQUINAS :. */
+    private String queryMaquinasSelectHeaders() {
+        return String.format(
+                "%s.%s as '%s.%s', " +
+                "%s.%s as '%s.%s', " +
+                "%s.%s as '%s.%s', " +
+                "%s.%s as '%s.%s', " +
+                "%s.%s as '%s.%s', " +
+                "%s.%s as '%s.%s', " +
+                "%s.%s as '%s.%s', " +
+                "%s.%s as '%s.%s', " +
+                "%s.%s as '%s.%s', " +
+                "",
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ID, BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ID,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_NUMERO_SERIE ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_NUMERO_SERIE,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ADRECA ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ADRECA,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_CODI_POSTAL ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_CODI_POSTAL,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_POBLACIO ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_POBLACIO,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ULTIMA_REVISIO ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ULTIMA_REVISIO,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_CLIENT ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_CLIENT,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_TIPUS ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_TIPUS,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ZONA ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ZONA);
+    }
+
     /** Devuelve un cursor con todas las máquinas
      * que hay en la tabla maquina.
      * @param orderBy String Nullable para ordenar
