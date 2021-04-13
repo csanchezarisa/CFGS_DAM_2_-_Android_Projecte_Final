@@ -1,5 +1,6 @@
 package com.example.buidemsl.models.datasource;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -404,10 +405,12 @@ public class MainDatasource {
 
     /** Devuelve un cursor con todas las máquinas
      * que hay en la tabla maquina.
+     * @param filter String Nullable para filtrar
+     *               la query
      * @param orderBy String Nullable para ordenar
      *                la quey
      * @return Cursor con las maquinas de la tabla */
-    public Cursor getMaquinas(@Nullable String orderBy) {
+    public Cursor getMaquinas(@Nullable String filter, @Nullable String orderBy) {
         String sqlCode =
                 "SELECT " + queryMaquinasSelectHeaders() +
                 " FROM " + BuidemHelper.TABLE_MAQUINA  +
@@ -417,6 +420,9 @@ public class MainDatasource {
                 " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA + " = " + BuidemHelper.TABLE_ZONA + "." + BuidemHelper.ZONA_ID +
                 " INNER JOIN " + BuidemHelper.TABLE_TIPUS +
                 " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS + " = " + BuidemHelper.TABLE_TIPUS + "." + BuidemHelper.TIPUS_ID;
+
+        if (filter != null && filter.length() > 0)
+            sqlCode += " WHERE " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE + " LIKE '%" + filter + "%'";
 
         if (orderBy != null && orderBy.length() > 0)
             sqlCode += " ORDER BY " + orderBy;

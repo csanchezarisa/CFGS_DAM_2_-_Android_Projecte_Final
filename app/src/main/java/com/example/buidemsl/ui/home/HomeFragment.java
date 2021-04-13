@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class HomeFragment extends Fragment {
     private ImageView listEmptyImg;
 
     private MachineOrderByEnum orderByEnum = MachineOrderByEnum.CLIENT_NAME;
+    private String filter = "";
 
     private String[] from = new String[]{
             BuidemHelper.MAQUINA_NUMERO_SERIE,
@@ -68,7 +70,7 @@ public class HomeFragment extends Fragment {
         listEmptyImg = (ImageView) root.findViewById(R.id.img_maquinas_empty);
 
         list = root.findViewById(R.id.list_maquines);
-        adapter = new MachineListAdapter(getContext(), R.layout.fragment_home_list, datasource.getMaquinas(orderByEnum.label), from, to, 0, this);
+        adapter = new MachineListAdapter(getContext(), R.layout.fragment_home_list, datasource.getMaquinas(filter, orderByEnum.label), from, to, 0, this);
         list.setAdapter(adapter);
 
         FloatingActionButton btnAdd = root.findViewById(R.id.btn_add_maquina);
@@ -89,6 +91,7 @@ public class HomeFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btn_menu_filter:
+                mostrarAlertFilter();
                 return true;
 
             case R.id.btn_menu_order:
@@ -163,12 +166,36 @@ public class HomeFragment extends Fragment {
     }
 
     private void mostrarAlertFilter() {
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
 
+        alertDialog.setTitle(R.string.fragment_home_alert_filter_title);
+
+        EditText edtSerialNumber = new EditText(getContext());
+        edtSerialNumber.setHint(getString(R.string.fragment_machine_managment_serial));
+        edtSerialNumber.setText(filter);
+
+        alertDialog.setView(edtSerialNumber);
+
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), (dialog, which) -> {
+            filter = edtSerialNumber.getText().toString();
+            refreshList();
+        });
+
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), (dialog, which) -> {
+            // Nothing
+        });
+
+        alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_clear), (dialog, which) -> {
+            filter = "";
+            refreshList();
+        });
+
+        alertDialog.show();
     }
 
     /** Actualiza el contenidoq que se muestra en la lista */
     private void refreshList() {
-        adapter.changeCursor(datasource.getMaquinas(orderByEnum.label));
+        adapter.changeCursor(datasource.getMaquinas(filter, orderByEnum.label));
         mostrarEmptyText();
     }
 

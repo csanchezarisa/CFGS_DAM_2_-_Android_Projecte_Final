@@ -26,6 +26,7 @@
         <item>Direction</item>
         <item>Last review date</item>
     </string-array>
+    <string name="fragment_home_alert_filter_title">Serial number to search</string>
     <string name="fragment_zonas_alert_edit_title">Zone</string>
     <string name="fragment_zonas_alert_add_title">New zone</string>
     <string name="fragment_zonas_alert_add_description">Description</string>
