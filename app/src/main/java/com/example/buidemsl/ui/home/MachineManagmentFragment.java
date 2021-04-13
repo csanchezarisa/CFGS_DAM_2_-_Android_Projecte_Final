@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.navigation.Navigator;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Html;
@@ -89,47 +88,17 @@ public class MachineManagmentFragment extends Fragment {
         dropType = (Spinner) root.findViewById(R.id.drop_machine_tipus);
         dropZone = (Spinner) root.findViewById(R.id.drop_machine_zona);
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                manageMachine(CREATE_ACTION);
-            }
-        });
+        btnAdd.setOnClickListener((View v) -> manageMachine(CREATE_ACTION));
 
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                manageMachine(EDIT_ACTION);
-            }
-        });
+        btnEdit.setOnClickListener((View v) -> manageMachine(EDIT_ACTION));
 
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarAlertEliminarZona(id);
-            }
-        });
+        btnDelete.setOnClickListener((View v) -> mostrarAlertEliminarZona(id));
 
-        btnAddClient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateFragment(0, NAVIGATE_CLIENTS);
-            }
-        });
+        btnAddClient.setOnClickListener((View v) -> navigateFragment(0, NAVIGATE_CLIENTS));
 
-        btnAddType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateFragment(0, NAVIGATE_TYPES);
-            }
-        });
+        btnAddType.setOnClickListener((View v) -> navigateFragment(0, NAVIGATE_TYPES));
 
-        btnAddZone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateFragment(0, NAVIGATE_ZONES);
-            }
-        });
+        btnAddZone.setOnClickListener((View v) -> navigateFragment(0, NAVIGATE_ZONES));
 
         setSpinnerAdapters();
 
@@ -176,12 +145,12 @@ public class MachineManagmentFragment extends Fragment {
         final String direction = edtDirection.getText().toString();
         final String postalCode = edtPostalCode.getText().toString();
         final String town = edtTown.getText().toString();
-        Date date = null;
+        Date date;
         try {
             date = new Date(edtLastRevision.getText().toString(), false);
         }
-        catch (Exception e) {
-
+        catch (Exception ignored) {
+            date = null;
         }
         final long client = dropClient.getSelectedItemId();
         final long zone = dropZone.getSelectedItemId();
@@ -284,24 +253,18 @@ public class MachineManagmentFragment extends Fragment {
         alert.setTitle(getString(R.string.default_alert_delete));
         alert.setMessage(getString(R.string.default_alert_delete_confirmation) + " " + getString(R.string.fragment_machine_managment_alert_content) + " " + id + "?");
 
-        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                final long status = datasource.deleteMaquina(id);
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), (dialog, which) -> {
+            final long status = datasource.deleteMaquina(id);
 
-                if (status <= 0)
-                    mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_deleting));
-                else {
-                    finish();
-                }
+            if (status <= 0)
+                mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_deleting));
+            else {
+                finish();
             }
         });
 
-        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Nothing
-            }
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), (dialog, which) -> {
+            // Nothing
         });
 
         alert.show();
