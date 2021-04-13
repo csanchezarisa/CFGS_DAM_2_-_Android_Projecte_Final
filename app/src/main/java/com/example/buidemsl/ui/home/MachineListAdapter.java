@@ -34,7 +34,7 @@ public class MachineListAdapter extends SimpleCursorAdapter {
 
         // Se pone el nombre y apellidos del cliente
         contentText = (TextView) view.findViewById(R.id.txt_list_item_maquina_client);
-        contentText.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_NOM)) + " " + maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_COGNOMS)));
+        contentText.setText(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.CLIENT_NOM)) + " " + maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.CLIENT_COGNOMS)));
 
         // Se aplica lógica para la parte del teléfono del cliente
         titleText = (TextView) view.findViewById(R.id.txt_list_item_maquina_client_phone_title);
@@ -76,7 +76,7 @@ public class MachineListAdapter extends SimpleCursorAdapter {
 
         // Se intenta recuperar la fecha. Si hay algún error (porque no está informada) se ocultan los TextView
         try {
-            Date date = new Date(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ULTIMA_REVISIO)), true);
+            Date date = new Date(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ULTIMA_REVISIO)), true);
             contentText.setText(date.getSQLDate());
         }
         catch (Exception e) {
@@ -89,7 +89,7 @@ public class MachineListAdapter extends SimpleCursorAdapter {
         });
 
         view.setOnLongClickListener(v -> {
-            parentFragment.openMachineManagement(maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ID)));
+            parentFragment.openMachineManagement(maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ID)));
             return true;
         });
 

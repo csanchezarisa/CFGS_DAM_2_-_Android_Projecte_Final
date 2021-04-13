@@ -29,12 +29,12 @@ public class HomeFragment extends Fragment {
     private MachineOrderByEnum orderByEnum = MachineOrderByEnum.CLIENT_NAME;
 
     private String[] from = new String[]{
-            BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE,
-            BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ADRECA,
-            BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CODI_POSTAL,
-            BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_POBLACIO,
-            BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_TELEFON,
-            BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_EMAIL,
+            BuidemHelper.MAQUINA_NUMERO_SERIE,
+            BuidemHelper.MAQUINA_ADRECA,
+            BuidemHelper.MAQUINA_CODI_POSTAL,
+            BuidemHelper.MAQUINA_POBLACIO,
+            BuidemHelper.CLIENT_TELEFON,
+            BuidemHelper.CLIENT_EMAIL,
             "tDescripcio",
             "zDescripcio"
     };
