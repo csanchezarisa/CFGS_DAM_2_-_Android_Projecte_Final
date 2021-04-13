@@ -1,7 +1,9 @@
 package com.example.buidemsl.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -44,7 +46,10 @@ public class MachineListAdapter extends SimpleCursorAdapter {
         // ¿Hay algún teléfono informado?
         if (contentText.getText().toString().length() > 0) {
             btnPhone.setOnClickListener(v -> {
-
+                String phoneNumber = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.CLIENT_TELEFON));
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phoneNumber));
+                parentFragment.startActivity(intent);
             });
         }
         else {
@@ -61,7 +66,13 @@ public class MachineListAdapter extends SimpleCursorAdapter {
         // ¿Hay algún email informado?
         if (contentText.getText().toString().length() > 0) {
             btnEmail.setOnClickListener(V -> {
-
+                final String email = maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.CLIENT_EMAIL));
+                final String subject = parentFragment.getString(R.string.fragment_clients_mail_subject) + " " + maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_NUMERO_SERIE));
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, email);
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                parentFragment.startActivity(intent);
             });
         }
         else {

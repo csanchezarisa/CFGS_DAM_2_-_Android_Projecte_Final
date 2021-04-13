@@ -41,6 +41,7 @@
     <string name="fragment_clients_snackbar_error_inserting">There was an error inserting that client\nPlease try again</string>
     <string name="fragment_clients_snackbar_error_updating">There was an error updating\nPlease try again</string>
     <string name="fragment_clients_snackbar_error_deleting">There was an error deleting\nPlease try again</string>
+    <string name="fragment_clients_mail_subject">Next machine review number</string>
     <string name="fragment_machine_managment_title">Machine management</string>
     <string name="fragment_machine_managment_serial">Serial number</string>
     <string name="fragment_machine_managment_direction">Direction</string>

@@ -1,7 +1,9 @@
 package com.example.buidemsl.ui.clients;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,33 +35,24 @@ public class ClientsListAdapter extends SimpleCursorAdapter {
         ImageView btnEmail = (ImageView) view.findViewById(R.id.list_item_client_img_email);
         ImageView btnPhone = (ImageView) view.findViewById(R.id.list_item_client_img_phone);
 
-        btnEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        btnEmail.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:"));
+            intent.putExtra(Intent.EXTRA_EMAIL, EMAIL);
+            parentFragment.startActivity(intent);
         });
 
-        btnPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        btnPhone.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + PHONE));
+            parentFragment.startActivity(intent);
         });
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parentFragment.mostrarAlertCliente(getItemId(position));
-            }
-        });
+        view.setOnClickListener(v -> parentFragment.mostrarAlertCliente(getItemId(position)));
 
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                parentFragment.mostrarAlertEliminarCliente(getItemId(position));
-                return true;
-            }
+        view.setOnLongClickListener(v -> {
+            parentFragment.mostrarAlertEliminarCliente(getItemId(position));
+            return true;
         });
 
         return view;
