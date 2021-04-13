@@ -13,7 +13,7 @@ public class CursorsUtil {
     public static int getItemPosition(SpinnerAdapter adapter, long idToSearch) {
         int position = -1;
 
-        for (int i = adapter.getCount() - 1; i <= 0; i--) {
+        for (int i = adapter.getCount() - 1; i >= 0; i--) {
             if (adapter.getItemId(i) == idToSearch) {
                 position = i;
                 break;
