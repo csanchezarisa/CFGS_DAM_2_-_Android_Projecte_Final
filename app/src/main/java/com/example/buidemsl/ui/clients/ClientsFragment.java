@@ -60,12 +60,7 @@ public class ClientsFragment extends Fragment {
         list.setAdapter(adapter);
 
         FloatingActionButton btnAdd = (FloatingActionButton) root.findViewById(R.id.btn_add_cliente);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarAlertCliente(-1);
-            }
-        });
+        btnAdd.setOnClickListener(v -> mostrarAlertCliente(-1));
 
         mostrarEmptyText();
 
@@ -104,54 +99,43 @@ public class ClientsFragment extends Fragment {
             edtEmail.setText(cliente.getString(cliente.getColumnIndexOrThrow(BuidemHelper.CLIENT_EMAIL)));
             edtPhone.setText(cliente.getString(cliente.getColumnIndexOrThrow(BuidemHelper.CLIENT_TELEFON)));
 
-            alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    mostrarAlertEliminarCliente(id);
-                }
-            });
+            alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), (dialog, which) -> mostrarAlertEliminarCliente(id));
         }
 
-        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), (dialog, which) -> {
 
-                // Se recupera el contenido de los inputs del alert
-                final String name = edtName.getText().toString();
-                final String surname = edtSurname.getText().toString();
-                final String email = edtEmail.getText().toString();
-                final String phone = edtPhone.getText().toString();
+            // Se recupera el contenido de los inputs del alert
+            final String name = edtName.getText().toString();
+            final String surname = edtSurname.getText().toString();
+            final String email = edtEmail.getText().toString();
+            final String phone = edtPhone.getText().toString();
 
-                // Se prepara una variable para conocer el estado de la queries
-                long status;
+            // Se prepara una variable para conocer el estado de la queries
+            long status;
 
-                // ¿Se tiene que crear o actualizar un cliente?
-                if (id < 0) {
-                    status = datasource.insertCliente(name, surname, email, phone);
-                }
-                else {
-                    status = datasource.updateCliente(id, name, surname, email, phone);
-                }
-
-                // Ha ido bien
-                if (status > 0)
-                    mostrarSnackbarSuccess(getString(R.string.fragment_clients_snackbar_success_default));
-                // No se ha hecho el update
-                else if (status == 0)
-                    mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_updating));
-                // No se ha podido crear
-                else
-                    mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_inserting));
-
-                refreshList();
+            // ¿Se tiene que crear o actualizar un cliente?
+            if (id < 0) {
+                status = datasource.insertCliente(name, surname, email, phone);
             }
+            else {
+                status = datasource.updateCliente(id, name, surname, email, phone);
+            }
+
+            // Ha ido bien
+            if (status > 0)
+                mostrarSnackbarSuccess(getString(R.string.fragment_clients_snackbar_success_default));
+            // No se ha hecho el update
+            else if (status == 0)
+                mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_updating));
+            // No se ha podido crear
+            else
+                mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_inserting));
+
+            refreshList();
         });
 
-        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Nothing
-            }
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), (dialog, which) -> {
+            // Nothing
         });
 
         alert.show();
@@ -165,25 +149,19 @@ public class ClientsFragment extends Fragment {
         alert.setTitle(getString(R.string.default_alert_delete));
         alert.setMessage(getString(R.string.default_alert_delete_confirmation) + " " + getString(R.string.fragment_clients_alert_edit_title) + " " + id + "?");
 
-        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                long status = datasource.deleteCliente(id);
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), (dialog, which) -> {
+            long status = datasource.deleteCliente(id);
 
-                if (status > 0)
-                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_deleted));
-                else
-                    mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_deleting));
+            if (status > 0)
+                mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_deleted));
+            else
+                mostrarSnackbarError(getString(R.string.fragment_clients_snackbar_error_deleting));
 
-                refreshList();
-            }
+            refreshList();
         });
 
-        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Nothing
-            }
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), (dialog, which) -> {
+            // Nothing
         });
 
         alert.show();
