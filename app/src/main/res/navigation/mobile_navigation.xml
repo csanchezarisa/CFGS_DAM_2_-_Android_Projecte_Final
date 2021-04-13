@@ -65,7 +65,7 @@
         tools:layout="@layout/fragment_clients" />
     <fragment
         android:id="@+id/machineManagmentFragment"
-        android:name="com.example.buidemsl.ui.home.MachineManagmentFragment"
+        android:name="com.example.buidemsl.ui.machinemanager.MachineManagmentFragment"
         android:label="@string/fragment_machine_managment_title"
         tools:layout="@layout/fragment_machine_managment" >
         <action

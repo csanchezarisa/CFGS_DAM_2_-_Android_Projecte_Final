@@ -1,4 +1,4 @@
-package com.example.buidemsl.ui.home;
+package com.example.buidemsl.ui.machinemanager;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -15,7 +15,6 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;

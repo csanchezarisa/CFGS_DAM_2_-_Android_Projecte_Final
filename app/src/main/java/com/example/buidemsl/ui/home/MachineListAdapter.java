@@ -95,9 +95,7 @@ public class MachineListAdapter extends SimpleCursorAdapter {
             contentText.setVisibility(View.GONE);
         }
 
-        view.setOnClickListener(v -> {
-
-        });
+        view.setOnClickListener(v -> parentFragment.openMap(getItemId(position)));
 
         view.setOnLongClickListener(v -> {
             parentFragment.openMachineManagement(getItemId(position));
