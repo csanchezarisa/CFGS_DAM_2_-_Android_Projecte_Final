@@ -3,15 +3,18 @@ package com.example.buidemsl.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.util.Date;
@@ -94,6 +97,10 @@ public class MachineListAdapter extends SimpleCursorAdapter {
             titleText.setVisibility(View.GONE);
             contentText.setVisibility(View.GONE);
         }
+
+        ImageView imgZone = (ImageView) view.findViewById(R.id.img_list_item_maquina_zone);
+        final int bgColor = Color.parseColor(maquina.getString(maquina.getColumnIndexOrThrow(BuidemHelper.TIPUS_COLOR)));
+        imgZone.setColorFilter(bgColor);
 
         view.setOnClickListener(v -> parentFragment.openMap(getItemId(position)));
 

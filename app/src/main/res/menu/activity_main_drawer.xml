@@ -14,7 +14,7 @@
             android:title="@string/menu_client" />
         <item
             android:id="@+id/nav_zonas"
-            android:icon="@drawable/ic_zones"
+            android:icon="@drawable/ic_flag"
             android:title="@string/menu_zonas" />
         <item
             android:id="@+id/nav_tipos"
