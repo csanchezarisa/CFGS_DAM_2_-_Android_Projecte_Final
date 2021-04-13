@@ -3,21 +3,17 @@ package com.example.buidemsl.ui.tipos;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -37,11 +33,11 @@ public class TiposFragment extends Fragment {
     private TextView listEmptyText;
     private ImageView listEmptyImg;
 
-    private String[] from = new String[]{
+    private final String[] from = new String[]{
             BuidemHelper.TIPUS_ID,
             BuidemHelper.TIPUS_DESCRIPCIO
     };
-    private int[] to = new int[]{
+    private final int[] to = new int[]{
             R.id.list_item_tipo_id,
             R.id.list_item_tipo_descripcio
     };
@@ -60,12 +56,7 @@ public class TiposFragment extends Fragment {
         list.setAdapter(adapter);
 
         FloatingActionButton btnAdd = (FloatingActionButton) root.findViewById(R.id.btn_add_tipo);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarAlertTipo(-1);
-            }
-        });
+        btnAdd.setOnClickListener(v -> mostrarAlertTipo(-1));
 
         mostrarEmptyText();
 
@@ -114,46 +105,35 @@ public class TiposFragment extends Fragment {
         alert.setTitle(alertTitle);
         alert.setView(input);
 
-        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), (dialog, which) -> {
 
-                final long status;
+            final long status;
 
-                if (id < 0) {
-                    status = datasource.insertTipo(input.getText().toString(), null);
-                }
-                else {
-                    status = datasource.updateTipo(id, input.getText().toString(), null);
-                }
-
-                if (status > 0 && id >= 0)
-                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_updated));
-                else if (status > 0)
-                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_inserted));
-                else if (id >= 0)
-                    mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_updating));
-                else
-                    mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_inserting));
-
-                refreshList();
+            if (id < 0) {
+                status = datasource.insertTipo(input.getText().toString(), null);
             }
+            else {
+                status = datasource.updateTipo(id, input.getText().toString(), null);
+            }
+
+            if (status > 0 && id >= 0)
+                mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_updated));
+            else if (status > 0)
+                mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_inserted));
+            else if (id >= 0)
+                mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_updating));
+            else
+                mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_inserting));
+
+            refreshList();
         });
 
-        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Nothing
-            }
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), (dialog, which) -> {
+            // Nothing
         });
 
         if (id >= 0)
-            alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    mostrarAlertEliminarTipo(id);
-                }
-            });
+            alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), (dialog, which) -> mostrarAlertEliminarTipo(id));
 
         alert.show();
     }
@@ -166,25 +146,19 @@ public class TiposFragment extends Fragment {
         alert.setTitle(getString(R.string.default_alert_delete));
         alert.setMessage(getString(R.string.default_alert_delete_confirmation) + " " + getString(R.string.fragment_zonas_alert_edit_title) + " " + id + "?");
 
-        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                final long status = datasource.deleteTipo(id);
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), (dialog, which) -> {
+            final long status = datasource.deleteTipo(id);
 
-                if (status > 0)
-                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_deleted));
-                else
-                    mostrarSnackbarError(getString(R.string.fragment_tipos_snackbar_error_deleting));
+            if (status > 0)
+                mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_deleted));
+            else
+                mostrarSnackbarError(getString(R.string.fragment_tipos_snackbar_error_deleting));
 
-                refreshList();
-            }
+            refreshList();
         });
 
-        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Nothing
-            }
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), (dialog, which) -> {
+            // Nothing
         });
 
         alert.show();
@@ -201,18 +175,15 @@ public class TiposFragment extends Fragment {
         colorPickerDialog.setLastColor(selectedColor);
         colorPickerDialog.setInitialColor(selectedColor);
 
-        colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
-            @Override
-            public void onColorPicked(int color, String hexVal) {
-                int rowsAfected = datasource.updateTipo(id, null, hexVal);
+        colorPickerDialog.setOnColorPickedListener((color, hexVal) -> {
+            int rowsAfected = datasource.updateTipo(id, null, hexVal);
 
-                if (rowsAfected > 0)
-                    mostrarSnackbarSuccess(getString(R.string.fragment_tipos_snackbar_color_updated_successfuly));
-                else
-                    mostrarSnackbarError(getString(R.string.fragment_tipos_snackbar_color_updated_error));
+            if (rowsAfected > 0)
+                mostrarSnackbarSuccess(getString(R.string.fragment_tipos_snackbar_color_updated_successfuly));
+            else
+                mostrarSnackbarError(getString(R.string.fragment_tipos_snackbar_color_updated_error));
 
-                refreshList();
-            }
+            refreshList();
         });
 
         colorPickerDialog.show();
