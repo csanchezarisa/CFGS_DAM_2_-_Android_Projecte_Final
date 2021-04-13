@@ -8,7 +8,6 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,11 +34,11 @@ public class ZonasFragment extends Fragment {
     private TextView listEmptyText;
     private ImageView listEmptyImg;
 
-    private String[] from = new String[]{
+    private final String[] from = new String[]{
             BuidemHelper.ZONA_ID,
             BuidemHelper.ZONA_DESCRIPCIO
     };
-    private int[] to = new int[]{
+    private final int[] to = new int[]{
             R.id.list_item_zona_id,
             R.id.list_item_zona_descripcio
     };
@@ -59,29 +58,16 @@ public class ZonasFragment extends Fragment {
 
         mostrarEmptyText();
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                openMap(id);
-            }
-        });
+        list.setOnItemClickListener((parent, view, position, id) -> openMap(id));
 
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mostrarAlertZona(id);
-                return true;
-            }
+        list.setOnItemLongClickListener((parent, view, position, id) -> {
+            mostrarAlertZona(id);
+            return true;
         });
 
         // Botón para añadir zonas
         FloatingActionButton bntAddZona = root.findViewById(R.id.btn_add_zona);
-        bntAddZona.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarAlertZona(-1);
-            }
-        });
+        bntAddZona.setOnClickListener(v -> mostrarAlertZona(-1));
 
         return root;
     }
@@ -128,46 +114,35 @@ public class ZonasFragment extends Fragment {
         alert.setTitle(alertTitle);
         alert.setView(input);
 
-        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), (dialog, which) -> {
 
-                long status;
+            long status;
 
-                if (id < 0) {
-                    status = datasource.insertZona(input.getText().toString());
-                }
-                else {
-                    status = datasource.updateZona(id, input.getText().toString());
-                }
-
-                if (status > 0 && id >= 0)
-                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_updated));
-                else if (status > 0)
-                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_inserted));
-                else if (id >= 0)
-                    mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_updating));
-                else
-                    mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_inserting));
-
-                refreshList();
+            if (id < 0) {
+                status = datasource.insertZona(input.getText().toString());
             }
+            else {
+                status = datasource.updateZona(id, input.getText().toString());
+            }
+
+            if (status > 0 && id >= 0)
+                mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_updated));
+            else if (status > 0)
+                mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_inserted));
+            else if (id >= 0)
+                mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_updating));
+            else
+                mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_inserting));
+
+            refreshList();
         });
 
-        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Nothing
-            }
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), (dialog, which) -> {
+            // Nothing
         });
 
         if (id >= 0)
-            alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    mostrarAlertEliminarZona(id);
-                }
-            });
+            alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), (dialog, which) -> mostrarAlertEliminarZona(id));
 
         alert.show();
     }
@@ -180,25 +155,19 @@ public class ZonasFragment extends Fragment {
         alert.setTitle(getString(R.string.default_alert_delete));
         alert.setMessage(getString(R.string.default_alert_delete_confirmation) + " " + getString(R.string.fragment_zonas_alert_edit_title) + " " + id + "?");
 
-        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                final long status = datasource.deleteZona(id);
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), (dialog, which) -> {
+            final long status = datasource.deleteZona(id);
 
-                if (status > 0)
-                    mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_deleted));
-                else
-                    mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_deleting));
+            if (status > 0)
+                mostrarSnackbarSuccess(getString(R.string.fragment_zonas_snackbar_successfuly_deleted));
+            else
+                mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_deleting));
 
-                refreshList();
-            }
+            refreshList();
         });
 
-        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Nothing
-            }
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), (dialog, which) -> {
+            // Nothing
         });
 
         alert.show();
