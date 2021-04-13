@@ -35,8 +35,8 @@ public class HomeFragment extends Fragment {
             BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_POBLACIO,
             BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_TELEFON,
             BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_EMAIL,
-            BuidemHelper.TABLE_TIPUS + "." + BuidemHelper.TIPUS_DESCRIPCIO,
-            BuidemHelper.TABLE_ZONA + "." + BuidemHelper.ZONA_DESCRIPCIO
+            "tDescripcio",
+            "zDescripcio"
     };
 
     private int[] to = new int[]{

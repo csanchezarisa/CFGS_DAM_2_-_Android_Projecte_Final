@@ -349,25 +349,38 @@ public class MainDatasource {
     /* .: 4 - MAQUINAS :. */
     private String queryMaquinasSelectHeaders() {
         return String.format(
-                "%s.%s as '%s.%s', " +
-                "%s.%s as '%s.%s', " +
-                "%s.%s as '%s.%s', " +
-                "%s.%s as '%s.%s', " +
-                "%s.%s as '%s.%s', " +
-                "%s.%s as '%s.%s', " +
-                "%s.%s as '%s.%s', " +
-                "%s.%s as '%s.%s', " +
-                "%s.%s as '%s.%s', " +
-                "",
-                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ID, BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ID,
-                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_NUMERO_SERIE ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_NUMERO_SERIE,
-                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ADRECA ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ADRECA,
-                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_CODI_POSTAL ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_CODI_POSTAL,
-                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_POBLACIO ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_POBLACIO,
-                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ULTIMA_REVISIO ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ULTIMA_REVISIO,
-                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_CLIENT ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_CLIENT,
-                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_TIPUS ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_TIPUS,
-                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ZONA ,BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ZONA);
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s, " +
+                "%s.%s AS 'zDescripcio', " +
+                "%s.%s AS 'tDescripcio', " +
+                "%s.%s",
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ID,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_NUMERO_SERIE,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ADRECA,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_CODI_POSTAL,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_POBLACIO,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ULTIMA_REVISIO,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_CLIENT,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_TIPUS,
+                BuidemHelper.TABLE_MAQUINA, BuidemHelper.MAQUINA_ZONA,
+                BuidemHelper.TABLE_CLIENT, BuidemHelper.CLIENT_NOM,
+                BuidemHelper.TABLE_CLIENT, BuidemHelper.CLIENT_COGNOMS,
+                BuidemHelper.TABLE_CLIENT, BuidemHelper.CLIENT_EMAIL,
+                BuidemHelper.TABLE_CLIENT, BuidemHelper.CLIENT_TELEFON,
+                BuidemHelper.TABLE_ZONA, BuidemHelper.ZONA_DESCRIPCIO,
+                BuidemHelper.TABLE_TIPUS, BuidemHelper.TIPUS_DESCRIPCIO,
+                BuidemHelper.TABLE_TIPUS, BuidemHelper.TIPUS_COLOR);
     }
 
     /** Devuelve un cursor con todas las máquinas
@@ -377,7 +390,7 @@ public class MainDatasource {
      * @return Cursor con las maquinas de la tabla */
     public Cursor getMaquinas(@Nullable String orderBy) {
         String sqlCode =
-                "SELECT *" +
+                "SELECT " + queryMaquinasSelectHeaders() +
                 " FROM " + BuidemHelper.TABLE_MAQUINA  +
                 " INNER JOIN " + BuidemHelper.TABLE_CLIENT +
                 " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT + " = " + BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_ID +
@@ -397,7 +410,7 @@ public class MainDatasource {
      * @return Cursor con la select hecha */
     public Cursor getMaquina(long id) {
         final String sqlCode =
-                "SELECT *" +
+                "SELECT " + queryMaquinasSelectHeaders() +
                 " FROM " + BuidemHelper.TABLE_MAQUINA  +
                 " INNER JOIN " + BuidemHelper.TABLE_CLIENT +
                 " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT + " = " + BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_ID +
