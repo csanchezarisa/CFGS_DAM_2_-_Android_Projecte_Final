@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.Navigator;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Html;
@@ -90,22 +92,14 @@ public class MachineManagmentFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    manageMachine(CREATE_ACTION);
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
+                manageMachine(CREATE_ACTION);
             }
         });
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    manageMachine(EDIT_ACTION);
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
+                manageMachine(EDIT_ACTION);
             }
         });
 
@@ -177,7 +171,7 @@ public class MachineManagmentFragment extends Fragment {
     /** Actualiza/crea una máquina.
      * @param action int con la constante referente
      *               a la acción a realizar */
-    private void manageMachine(int action) throws Throwable {
+    private void manageMachine(int action) {
         final String serial = edtSerial.getText().toString();
         final String direction = edtDirection.getText().toString();
         final String postalCode = edtPostalCode.getText().toString();
@@ -214,8 +208,8 @@ public class MachineManagmentFragment extends Fragment {
     }
 
     /** Finaliza el fragment */
-    private void finish() throws Throwable {
-        finalize();
+    private void finish() {
+        Navigation.findNavController(getView()).popBackStack();
     }
 
     /** Si el id a editar es negativo
@@ -298,11 +292,7 @@ public class MachineManagmentFragment extends Fragment {
                 if (status <= 0)
                     mostrarSnackbarError(getString(R.string.fragment_zonas_snackbar_error_deleting));
                 else {
-                    try {
-                        finish();
-                    } catch (Throwable throwable) {
-                        throwable.printStackTrace();
-                    }
+                    finish();
                 }
             }
         });
