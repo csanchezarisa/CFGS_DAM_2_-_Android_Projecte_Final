@@ -220,7 +220,7 @@ public class ZonasFragment extends Fragment {
      * @param id long con el ID de la zona a mostrar */
     private void openMap(long id) {
         Bundle bundle = new Bundle();
-        bundle.putString("column_name", BuidemHelper.TABLE_ZONA);
+        bundle.putString("column_name", BuidemHelper.MAQUINA_ZONA);
         bundle.putLong("id", id);
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_zonas_to_mapsFragment, bundle);
     }

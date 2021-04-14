@@ -236,7 +236,7 @@ public class TiposFragment extends Fragment {
      * @param id long con el ID del tipo a mostrar */
     public void openMap(long id) {
         Bundle bundle = new Bundle();
-        bundle.putString("column_name", BuidemHelper.TABLE_TIPUS);
+        bundle.putString("column_name", BuidemHelper.MAQUINA_TIPUS);
         bundle.putLong("id", id);
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_tipos_to_mapsFragment, bundle);
     }

@@ -214,7 +214,7 @@ public class HomeFragment extends Fragment {
      * @param id long con el ID de la maquina a mostrar */
     public void openMap(long id) {
         Bundle bundle = new Bundle();
-        bundle.putString("column_name", BuidemHelper.TABLE_MAQUINA);
+        bundle.putString("column_name", BuidemHelper.MAQUINA_ID);
         bundle.putLong("id", id);
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_mapsFragment, bundle);
     }
