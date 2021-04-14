@@ -15,6 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.buidemsl.R;
+import com.example.buidemsl.models.datasource.MainDatasource;
+import com.example.buidemsl.util.CursorsUtil;
+import com.example.buidemsl.util.objects.models.Maquina;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,9 +25,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 public class MapsFragment extends Fragment {
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
+    private MainDatasource datasource;
+    private String columnName = "";
+    private long id = -1;
 
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -39,6 +47,11 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            String[] customFilter = null;
+            if (id >= 0 && columnName.length() > 0)
+                customFilter = new String[]{columnName, String.valueOf(id)};
+
+            ArrayList<Maquina> maquinas = CursorsUtil.convertCursorToMaquinas(datasource.getMaquinas(null, null, customFilter));
             LatLng sydney = new LatLng(-34, 151);
             googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
@@ -51,9 +64,16 @@ public class MapsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        datasource = new MainDatasource(getContext());
+
         // ¿Se han pasado argumentos al mapa?
         if (getArguments() != null) {
-
+            id = getArguments().getLong("id");
+            columnName = getArguments().getString("column_name");
+        }
+        else {
+            id = -1;
+            columnName = "";
         }
 
         return inflater.inflate(R.layout.fragment_maps, container, false);

@@ -89,7 +89,7 @@ public class CursorsUtil {
                 }
                 try {
                     tipus = new Tipus(
-                            cursorMaquinas.getLong(cursorMaquinas.getColumnIndexOrThrow(BuidemHelper.TABLE_TIPUS)),
+                            cursorMaquinas.getLong(cursorMaquinas.getColumnIndexOrThrow(BuidemHelper.MAQUINA_TIPUS)),
                             cursorMaquinas.getString(cursorMaquinas.getColumnIndexOrThrow("tDescripcio")),
                             cursorMaquinas.getString(cursorMaquinas.getColumnIndexOrThrow(BuidemHelper.TIPUS_COLOR))
                     );

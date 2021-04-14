@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment {
         listEmptyImg = (ImageView) root.findViewById(R.id.img_maquinas_empty);
 
         list = root.findViewById(R.id.list_maquines);
-        adapter = new MachineListAdapter(getContext(), R.layout.fragment_home_list, datasource.getMaquinas(filter, orderByEnum.label), from, to, 0, this);
+        adapter = new MachineListAdapter(getContext(), R.layout.fragment_home_list, datasource.getMaquinas(filter, orderByEnum.label, null), from, to, 0, this);
         list.setAdapter(adapter);
 
         FloatingActionButton btnAdd = root.findViewById(R.id.btn_add_maquina);
@@ -194,7 +194,7 @@ public class HomeFragment extends Fragment {
 
     /** Actualiza el contenidoq que se muestra en la lista */
     private void refreshList() {
-        adapter.changeCursor(datasource.getMaquinas(filter, orderByEnum.label));
+        adapter.changeCursor(datasource.getMaquinas(filter, orderByEnum.label, null));
         mostrarEmptyText();
     }
 

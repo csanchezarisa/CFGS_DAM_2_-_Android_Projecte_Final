@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.util.objects.Date;
+import com.google.android.gms.dynamic.IFragmentWrapper;
 
 public class MainDatasource {
 
@@ -409,7 +410,7 @@ public class MainDatasource {
      * @param orderBy String Nullable para ordenar
      *                la quey
      * @return Cursor con las maquinas de la tabla */
-    public Cursor getMaquinas(@Nullable String filter, @Nullable String orderBy) {
+    public Cursor getMaquinas(@Nullable String filter, @Nullable String orderBy, @Nullable String[] customFilter) {
         String sqlCode =
                 "SELECT " + queryMaquinasSelectHeaders() +
                 " FROM " + BuidemHelper.TABLE_MAQUINA  +
@@ -419,6 +420,9 @@ public class MainDatasource {
                 " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA + " = " + BuidemHelper.TABLE_ZONA + "." + BuidemHelper.ZONA_ID +
                 " INNER JOIN " + BuidemHelper.TABLE_TIPUS +
                 " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS + " = " + BuidemHelper.TABLE_TIPUS + "." + BuidemHelper.TIPUS_ID;
+
+        if (customFilter != null && customFilter.length == 2)
+            sqlCode += " WHERE " + customFilter[0] + " = " + customFilter[1];
 
         if (filter != null && filter.length() > 0)
             sqlCode += " WHERE " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE + " LIKE '%" + filter + "%'";
