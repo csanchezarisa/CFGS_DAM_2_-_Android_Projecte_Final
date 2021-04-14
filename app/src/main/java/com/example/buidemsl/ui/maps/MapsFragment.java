@@ -2,8 +2,13 @@ package com.example.buidemsl.ui.maps;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +24,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment {
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
+
+    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
          * Manipulates the map once available.
@@ -59,6 +66,33 @@ public class MapsFragment extends Fragment {
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
+        }
+
+        solicitarPermis();
+    }
+
+    /** Revisa si el permiso de la ubicación está permitido. Sino, lo pide */
+    public void solicitarPermis() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(getString(R.string.fragment_maps_alert_permissions_title))
+                    .setMessage(getString(R.string.fragment_maps_alert_permissions_message))
+                    .setPositiveButton(R.string.default_alert_accept, (dialog, which) -> ActivityCompat.requestPermissions(
+                            getActivity(),
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            REQUEST_LOCATION_PERMISSION
+                    ))
+                    .setNegativeButton(R.string.default_alert_cancel, (dialog, which) -> {
+                        // Nothing
+                    })
+                    .show();
+        }
+        else {
+            ActivityCompat.requestPermissions(
+                    getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_LOCATION_PERMISSION
+            );
         }
     }
 }

@@ -63,5 +63,7 @@
     <string name="fragment_machine_managment_type">Type</string>
     <string name="fragment_machine_managment_zone">Zone</string>
     <string name="fragment_machine_managment_alert_content">Machine</string>
+    <string name="fragment_maps_alert_permissions_title">Permission request</string>
+    <string name="fragment_maps_alert_permissions_message">Please activate the GPS permission to improve the experience of using the map.</string>
     <string name="menu_maps">Maps</string>
 </resources>
