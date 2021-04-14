@@ -14,10 +14,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
-import com.example.buidemsl.util.Date;
+import com.example.buidemsl.util.objects.Date;
 
 public class MachineListAdapter extends SimpleCursorAdapter {
 

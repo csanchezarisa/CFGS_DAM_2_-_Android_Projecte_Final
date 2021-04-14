@@ -24,7 +24,7 @@ import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
 import com.example.buidemsl.util.CursorsUtil;
-import com.example.buidemsl.util.Date;
+import com.example.buidemsl.util.objects.Date;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 

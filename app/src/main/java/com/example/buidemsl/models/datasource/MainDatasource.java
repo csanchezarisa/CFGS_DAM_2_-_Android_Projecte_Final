@@ -1,6 +1,5 @@
 package com.example.buidemsl.models.datasource;
 
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.buidemsl.models.BuidemHelper;
-import com.example.buidemsl.util.Date;
+import com.example.buidemsl.util.objects.Date;
 
 public class MainDatasource {
 
