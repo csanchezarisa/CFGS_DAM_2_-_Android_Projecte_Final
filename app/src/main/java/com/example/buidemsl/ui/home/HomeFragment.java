@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -36,7 +35,7 @@ public class HomeFragment extends Fragment {
     private MachineOrderByEnum orderByEnum = MachineOrderByEnum.CLIENT_NAME;
     private String filter = "";
 
-    private String[] from = new String[]{
+    private final String[] from = new String[]{
             BuidemHelper.MAQUINA_NUMERO_SERIE,
             BuidemHelper.MAQUINA_ADRECA,
             BuidemHelper.MAQUINA_CODI_POSTAL,
@@ -47,7 +46,7 @@ public class HomeFragment extends Fragment {
             "zDescripcio"
     };
 
-    private int[] to = new int[]{
+    private final int[] to = new int[]{
             R.id.txt_list_item_maquina_serial,
             R.id.txt_list_item_maquina_adreca,
             R.id.txt_list_item_maquina_codi_postal,
