@@ -43,6 +43,12 @@ public class MapsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        // ¿Se han pasado argumentos al mapa?
+        if (getArguments() != null) {
+
+        }
+
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
