@@ -142,6 +142,10 @@ public class MapsFragment extends Fragment {
             // Listener al clicar encima del popup del marker
             // abrirá el fragment para editar la maquina
             googleMap.setOnInfoWindowClickListener(marker -> {
+
+            });
+
+            googleMap.setOnInfoWindowLongClickListener(marker -> {
                 Cursor maquina = datasource.getMaquina(marker.getTitle());
                 if (maquina.moveToFirst()) {
                     final long idMaquina = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ID));
