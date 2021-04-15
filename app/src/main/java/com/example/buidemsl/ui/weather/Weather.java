@@ -60,14 +60,12 @@ public class Weather {
                     e.printStackTrace();
                 }
 
-                progressDialog.hide();
-                progressDialog = null;
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                progressDialog.hide();
-                progressDialog = null;
+                progressDialog.dismiss();
             }
         });
     }
