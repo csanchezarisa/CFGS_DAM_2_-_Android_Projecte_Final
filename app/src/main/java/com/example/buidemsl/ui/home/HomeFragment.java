@@ -25,7 +25,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HomeFragment extends Fragment {
 
-    private ListView list;
     private MainDatasource datasource;
     private MachineListAdapter adapter;
 
@@ -68,7 +67,7 @@ public class HomeFragment extends Fragment {
         listEmptyText = (TextView) root.findViewById(R.id.txt_maquinas_empty);
         listEmptyImg = (ImageView) root.findViewById(R.id.img_maquinas_empty);
 
-        list = root.findViewById(R.id.list_maquines);
+        ListView list = root.findViewById(R.id.list_maquines);
         adapter = new MachineListAdapter(getContext(), R.layout.fragment_home_list, datasource.getMaquinas(filter, orderByEnum.label, null), from, to, 0, this);
         list.setAdapter(adapter);
 

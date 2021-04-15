@@ -10,7 +10,6 @@ import android.widget.SimpleCursorAdapter;
 
 import androidx.fragment.app.Fragment;
 
-import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 

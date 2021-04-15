@@ -27,7 +27,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class ZonasFragment extends Fragment {
 
-    private ListView list;
     private MainDatasource datasource;
     private CursorAdapter adapter;
 
@@ -52,7 +51,7 @@ public class ZonasFragment extends Fragment {
         listEmptyText = (TextView) root.findViewById(R.id.txt_zonas_empty);
 
         // Se busca la lista y se le asigna el adapter. Se crean los listeners
-        list = (ListView) root.findViewById(R.id.list_zonas);
+        ListView list = (ListView) root.findViewById(R.id.list_zonas);
         adapter = new SimpleCursorAdapter(getContext(), R.layout.fragment_zonas_list, datasource.getZonas(), from, to, 0);
         list.setAdapter(adapter);
 

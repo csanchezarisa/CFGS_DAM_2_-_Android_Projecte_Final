@@ -26,7 +26,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class TiposFragment extends Fragment {
 
-    private ListView list;
     private MainDatasource datasource;
     private TiposListAdapter adapter;
 
@@ -51,7 +50,7 @@ public class TiposFragment extends Fragment {
         listEmptyText = (TextView) root.findViewById(R.id.txt_tipos_empty);
 
         // Se busca la lista y se le asigna el adapter. Se crean los listeners
-        list = (ListView) root.findViewById(R.id.list_tipos);
+        ListView list = (ListView) root.findViewById(R.id.list_tipos);
         adapter = new TiposListAdapter(getContext(), R.layout.fragment_tipos_list, datasource.getTipos(), from, to, 0, this);
         list.setAdapter(adapter);
 

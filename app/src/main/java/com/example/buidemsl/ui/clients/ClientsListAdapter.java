@@ -16,7 +16,7 @@ import com.example.buidemsl.models.BuidemHelper;
 
 public class ClientsListAdapter extends SimpleCursorAdapter {
 
-    private ClientsFragment parentFragment;
+    private final ClientsFragment parentFragment;
 
     public ClientsListAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags, Fragment parentFragment) {
         super(context, layout, c, from, to, flags);

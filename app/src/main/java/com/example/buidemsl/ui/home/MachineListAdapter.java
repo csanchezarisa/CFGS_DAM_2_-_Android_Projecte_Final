@@ -20,7 +20,7 @@ import com.example.buidemsl.util.objects.Date;
 
 public class MachineListAdapter extends SimpleCursorAdapter {
 
-    private HomeFragment parentFragment;
+    private final HomeFragment parentFragment;
 
     public MachineListAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags, Fragment parentFragment) {
         super(context, layout, c, from, to, flags);

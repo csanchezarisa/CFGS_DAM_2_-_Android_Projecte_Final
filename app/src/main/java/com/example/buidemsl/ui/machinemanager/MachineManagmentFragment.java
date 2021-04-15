@@ -1,6 +1,7 @@
 package com.example.buidemsl.ui.machinemanager;
 
 import android.app.AlertDialog;
+
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -38,11 +39,6 @@ public class MachineManagmentFragment extends Fragment {
     private FloatingActionButton btnEdit;
     private FloatingActionButton btnDelete;
 
-    // Botones para añadir cliente, tipo y zona
-    private ImageButton btnAddClient;
-    private ImageButton btnAddType;
-    private ImageButton btnAddZone;
-
     // Inputs necesarios para crear una maquina
     private EditText edtSerial;
     private EditText edtDirection;
@@ -78,9 +74,10 @@ public class MachineManagmentFragment extends Fragment {
         btnEdit = (FloatingActionButton) root.findViewById(R.id.btn_edit_maquina);
         btnDelete = (FloatingActionButton) root.findViewById(R.id.btn_delete_maquina);
 
-        btnAddClient = (ImageButton) root.findViewById(R.id.btn_add_new_client);
-        btnAddType = (ImageButton) root.findViewById(R.id.btn_add_new_tipus);
-        btnAddZone = (ImageButton) root.findViewById(R.id.btn_add_new_zona);
+        // Botones para añadir cliente, tipo y zona
+        ImageButton btnAddClient = (ImageButton) root.findViewById(R.id.btn_add_new_client);
+        ImageButton btnAddType = (ImageButton) root.findViewById(R.id.btn_add_new_tipus);
+        ImageButton btnAddZone = (ImageButton) root.findViewById(R.id.btn_add_new_zona);
 
         edtSerial = (EditText) root.findViewById(R.id.edt_machine_serial);
         edtDirection = (EditText) root.findViewById(R.id.edt_machine_adreca);
