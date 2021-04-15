@@ -69,6 +69,7 @@ public class MapsFragment extends Fragment {
             // Objeto LatLngBounds que se encargará de situar
             // la cámara en medio de los puntos y con el zoom correcto
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            boolean setZoom = false;
 
             // Se recorren las máquinas extrayendo la posición
             for (Maquina maquina : maquinas) {
@@ -82,6 +83,7 @@ public class MapsFragment extends Fragment {
                     // Al creador de los bordes de posicionamiento se le
                     // añade la posición de la máquina actual
                     builder.include(position);
+                    setZoom = true;
 
                     // Se añade el marcador en el mapa
                     googleMap.addMarker(
@@ -101,15 +103,18 @@ public class MapsFragment extends Fragment {
             }
             googleMap.getUiSettings().setZoomControlsEnabled(true);
 
-            // Se crean los bordes desde el builder con todas las posiciones
-            // de las máquinas a mostrar
-            LatLngBounds bounds = builder.build();
+            // ¿Hay alguna marca con la que poder hacer zoom?
+            if (setZoom) {
+                // Se crean los bordes desde el builder con todas las posiciones
+                // de las máquinas a mostrar
+                LatLngBounds bounds = builder.build();
 
-            // Se crea un movimiento de la cámara a partir de los bordes creados
-            // y se mueve la cámara
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 5);
-            googleMap.moveCamera(cameraUpdate);
-            googleMap.animateCamera(cameraUpdate);
+                // Se crea un movimiento de la cámara a partir de los bordes creados
+                // y se mueve la cámara
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 5);
+                googleMap.moveCamera(cameraUpdate);
+                googleMap.animateCamera(cameraUpdate);
+            }
         }
     };
 

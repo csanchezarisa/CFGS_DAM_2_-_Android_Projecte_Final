@@ -422,7 +422,7 @@ public class MainDatasource {
                 " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS + " = " + BuidemHelper.TABLE_TIPUS + "." + BuidemHelper.TIPUS_ID;
 
         if (customFilter != null && customFilter.length == 2)
-            sqlCode += " WHERE " + customFilter[0] + " = " + customFilter[1];
+            sqlCode += " WHERE " + BuidemHelper.TABLE_MAQUINA + "." + customFilter[0] + " = " + customFilter[1];
 
         if (filter != null && filter.length() > 0)
             sqlCode += " WHERE " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE + " LIKE '%" + filter + "%'";
