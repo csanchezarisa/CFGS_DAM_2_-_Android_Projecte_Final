@@ -135,7 +135,7 @@ public class MapsFragment extends Fragment {
 
                 // Se crea un movimiento de la cámara a partir de los bordes creados
                 // y se mueve la cámara
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 5);
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 200);
                 googleMap.moveCamera(cameraUpdate);
                 googleMap.animateCamera(cameraUpdate);
             }
