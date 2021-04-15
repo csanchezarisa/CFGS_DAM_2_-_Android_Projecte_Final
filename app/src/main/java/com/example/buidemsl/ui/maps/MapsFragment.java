@@ -30,11 +30,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -107,7 +105,7 @@ public class MapsFragment extends Fragment {
                         ColorUtils.colorToHSL(Color.parseColor(maquina.getTipus().getColor()), hueColor);
                         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(hueColor[0]));
                     }
-                    catch (Exception e) {
+                    catch (Exception ignored) {
 
                     }
 
@@ -116,6 +114,10 @@ public class MapsFragment extends Fragment {
 
                 }
             }
+
+            // Se libera la memoria
+            maquinas.clear();
+            System.gc();
 
             // Se configuran los controles del mapa
             if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
