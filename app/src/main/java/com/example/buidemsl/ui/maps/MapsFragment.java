@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -11,6 +12,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +30,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -89,13 +93,26 @@ public class MapsFragment extends Fragment {
                     builder.include(position);
                     setZoom = true;
 
-                    // Se añade el marcador en el mapa
-                    googleMap.addMarker(
-                            new MarkerOptions()
+                    // Se crea el marcador
+                    MarkerOptions markerOptions = new MarkerOptions()
                             .position(position)
                             .title(maquina.getNumeroSerie())
-                            .snippet(maquina.getFullDirection())
-                    );
+                            .snippet(maquina.getFullDirection());
+
+                    try {
+                        // Para cambiar el color del marcador Default hace falta el HUE del color
+                        // Se ejecuta el método de ColorUtils que en la posición 0 del array deja
+                        // calculado el HUE del color del tipo de la máquina y se asigna
+                        float[] hueColor = new float[3];
+                        ColorUtils.colorToHSL(Color.parseColor(maquina.getTipus().getColor()), hueColor);
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(hueColor[0]));
+                    }
+                    catch (Exception e) {
+
+                    }
+
+                    // Se añade el marcador en el mapa
+                    googleMap.addMarker(markerOptions);
 
                 }
             }
