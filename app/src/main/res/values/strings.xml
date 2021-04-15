@@ -68,5 +68,8 @@
     <string name="fragment_maps_alert_permissions_message">Please activate the GPS permission to improve the experience of using the map.</string>
     <string name="weather_dialog_getting_info_title">Getting info</string>
     <string name="weather_dialog_getting_info_message">Getting weather information</string>
+    <string name="weather_dialog_processing_response_title">Processing info</string>
+    <string name="weather_dialog_processing_response_message">Processing wheather information</string>
+    <string name="weather_dialog_title">Wheather information</string>
     <string name="menu_maps">Maps</string>
 </resources>

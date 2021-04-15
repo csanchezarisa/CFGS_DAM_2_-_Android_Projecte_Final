@@ -143,7 +143,7 @@ public class MapsFragment extends Fragment {
             // Listener al clicar encima del popup del marker
             // abrirá el fragment para editar la maquina
             googleMap.setOnInfoWindowClickListener(marker -> {
-                Weather.openWeatherDialog(getContext(), marker.getPosition(), getString(R.string.app_lang));
+                Weather.openWeatherDialog(getParentFragment(), marker.getPosition(), getString(R.string.app_lang));
             });
 
             googleMap.setOnInfoWindowLongClickListener(marker -> {
