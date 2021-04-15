@@ -78,7 +78,7 @@ public class BuidemHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + TABLE_TIPUS + "(" +
                 TIPUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 TIPUS_DESCRIPCIO + " TEXT NOT NULL UNIQUE," +
-                TIPUS_COLOR + " TEXT NOT NULL DEFAULT '#D3D3D3');";
+                TIPUS_COLOR + " TEXT NOT NULL DEFAULT '#FF0000');";
         db.execSQL(sqlCode);
 
         // Creació de la taula MAQUINA
@@ -124,7 +124,7 @@ public class BuidemHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 2) {
             String sqlCode = "ALTER TABLE " + TABLE_TIPUS +
-                    " ADD COLUMN " + TIPUS_COLOR + " TEXT NOT NULL DEFAULT '#D3D3D3';";
+                    " ADD COLUMN " + TIPUS_COLOR + " TEXT NOT NULL DEFAULT '#FF0000';";
             db.execSQL(sqlCode);
         }
     }
