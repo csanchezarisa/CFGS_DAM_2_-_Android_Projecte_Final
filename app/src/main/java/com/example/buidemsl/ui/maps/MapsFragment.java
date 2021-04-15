@@ -20,11 +20,13 @@ import com.example.buidemsl.models.datasource.MainDatasource;
 import com.example.buidemsl.util.CursorsUtil;
 import com.example.buidemsl.util.MapsUtil;
 import com.example.buidemsl.util.objects.models.Maquina;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -64,11 +66,9 @@ public class MapsFragment extends Fragment {
             // de las máquinas.
             Geocoder coder = new Geocoder(getContext());
 
-            // Se crean dos array double para conocer el máximo
-            // y el mínimo de lat y lng y poder hacer la media
-            // Se setean a 200 porque pasa el máximo possible
-            double[] lat = new double[]{200, 200};
-            double[] lng = new double[]{200, 200};
+            // Objeto LatLngBounds que se encargará de situar
+            // la cámara en medio de los puntos y con el zoom correcto
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
             // Se recorren las máquinas extrayendo la posición
             for (Maquina maquina : maquinas) {
@@ -79,27 +79,9 @@ public class MapsFragment extends Fragment {
                 // ¿Se ha conseguido correctamente la posición?
                 if (position != null) {
 
-                    // No se ha definido ningún máximo ni ningún mínimo aún
-                    if (lat[0] == 200 && lat[1] == 200 && lng[0] == 200 && lng[1] == 200) {
-                        lat[0] = position.latitude;
-                        lat[1] = position.latitude;
-                        lng[0] = position.longitude;
-                        lng[1] = position.longitude;
-                    }
-                    else {
-
-                        // Compara si la longitud/latitud mínimas y máximas
-                        // son superadas por la posición actual. Entonces, las cambia
-                        if (lat[0] < position.latitude)
-                            lat[0] = position.latitude;
-                        if (lat[1] > position.latitude)
-                            lat[1] = position.latitude;
-                        if (lng[0] < position.longitude)
-                            lng[0] = position.longitude;
-                        if (lng[1] > position.longitude)
-                            lng[1] = position.longitude;
-
-                    }
+                    // Al creador de los bordes de posicionamiento se le
+                    // añade la posición de la máquina actual
+                    builder.include(position);
 
                     // Se añade el marcador en el mapa
                     googleMap.addMarker(
@@ -119,9 +101,15 @@ public class MapsFragment extends Fragment {
             }
             googleMap.getUiSettings().setZoomControlsEnabled(true);
 
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(
-                    new LatLng((lat[0] + lat[1]) / 2, (lng[0] + lng[1]) / 2)
-            ));
+            // Se crean los bordes desde el builder con todas las posiciones
+            // de las máquinas a mostrar
+            LatLngBounds bounds = builder.build();
+
+            // Se crea un movimiento de la cámara a partir de los bordes creados
+            // y se mueve la cámara
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 5);
+            googleMap.moveCamera(cameraUpdate);
+            googleMap.animateCamera(cameraUpdate);
         }
     };
 
