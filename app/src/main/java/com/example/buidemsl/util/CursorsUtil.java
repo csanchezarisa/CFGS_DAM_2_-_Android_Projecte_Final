@@ -36,7 +36,8 @@ public class CursorsUtil {
 
     /** Recorre un cursor creando objetos Máquina y anidándolos a un ArrayList
      * de máquinas.
-     * @param cursorMaquinas Cursor con la query de máquinas deseada */
+     * @param cursorMaquinas Cursor con la query de máquinas deseada
+     * @return ArrayList de Máquinas con los objetos que contiene el cursor */
     public static ArrayList<Maquina> convertCursorToMaquinas(Cursor cursorMaquinas) {
         ArrayList<Maquina> list = new ArrayList<>();
 
