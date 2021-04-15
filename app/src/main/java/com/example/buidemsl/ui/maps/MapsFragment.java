@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import com.example.buidemsl.R;
 import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
+import com.example.buidemsl.ui.weather.Weather;
 import com.example.buidemsl.util.CursorsUtil;
 import com.example.buidemsl.util.MapsUtil;
 import com.example.buidemsl.util.objects.models.Maquina;
@@ -142,7 +143,7 @@ public class MapsFragment extends Fragment {
             // Listener al clicar encima del popup del marker
             // abrirá el fragment para editar la maquina
             googleMap.setOnInfoWindowClickListener(marker -> {
-
+                Weather.openWeatherDialog(getContext(), marker.getPosition(), getString(R.string.app_lang));
             });
 
             googleMap.setOnInfoWindowLongClickListener(marker -> {

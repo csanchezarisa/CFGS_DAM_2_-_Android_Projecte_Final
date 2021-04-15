@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Buidem SL</string>
+    <string name="app_lang">en</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Buidem SL</string>
@@ -65,5 +66,7 @@
     <string name="fragment_machine_managment_alert_content">Machine</string>
     <string name="fragment_maps_alert_permissions_title">Permission request</string>
     <string name="fragment_maps_alert_permissions_message">Please activate the GPS permission to improve the experience of using the map.</string>
+    <string name="weather_dialog_getting_info_title">Getting info</string>
+    <string name="weather_dialog_getting_info_message">Getting weather information</string>
     <string name="menu_maps">Maps</string>
 </resources>
