@@ -5,10 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.buidemsl.R;
+import com.example.buidemsl.models.BuidemHelper;
 import com.example.buidemsl.models.datasource.MainDatasource;
 import com.example.buidemsl.util.CursorsUtil;
 import com.example.buidemsl.util.MapsUtil;
@@ -27,6 +30,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -115,6 +119,16 @@ public class MapsFragment extends Fragment {
                 googleMap.moveCamera(cameraUpdate);
                 googleMap.animateCamera(cameraUpdate);
             }
+
+            // Listener al clicar encima del popup del marker
+            // abrirá el fragment para editar la maquina
+            googleMap.setOnInfoWindowClickListener(marker -> {
+                Cursor maquina = datasource.getMaquina(marker.getTitle());
+                if (maquina.moveToFirst()) {
+                    final long idMaquina = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ID));
+                    openMaquinaFragment(idMaquina);
+                }
+            });
         }
     };
 
@@ -174,5 +188,13 @@ public class MapsFragment extends Fragment {
                     REQUEST_LOCATION_PERMISSION
             );
         }
+    }
+
+    /** Permite abrir el fragment de edición de una máquina
+     * @param id long con el ID de la máquina a abrir */
+    private void openMaquinaFragment(long id) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("id", id);
+        NavHostFragment.findNavController(this).navigate(R.id.action_mapsFragment_to_machineManagmentFragment, bundle);
     }
 }

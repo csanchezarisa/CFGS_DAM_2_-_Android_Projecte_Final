@@ -57,7 +57,15 @@
         android:id="@+id/mapsFragment"
         android:name="com.example.buidemsl.ui.maps.MapsFragment"
         android:label="@string/menu_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_machineManagmentFragment"
+            app:destination="@id/machineManagmentFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
     <fragment
         android:id="@+id/clientsFragment"
         android:name="com.example.buidemsl.ui.clients.ClientsFragment"

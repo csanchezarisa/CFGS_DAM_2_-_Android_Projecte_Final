@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.buidemsl.models.BuidemHelper;
+import com.example.buidemsl.util.CursorsUtil;
 import com.example.buidemsl.util.objects.Date;
 import com.google.android.gms.dynamic.IFragmentWrapper;
 
@@ -447,6 +448,25 @@ public class MainDatasource {
                 " INNER JOIN " + BuidemHelper.TABLE_TIPUS +
                 " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS + " = " + BuidemHelper.TABLE_TIPUS + "." + BuidemHelper.TIPUS_ID +
                 " WHERE " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ID + " = " + id;
+
+        return dbR.rawQuery(sqlCode, null);
+    }
+
+    /** Devuelve un Cursor con la máquina seleccionada
+     * @param serialNumber String con el número de série
+     *                     de la máquina a buscar
+     * @return Cursor con la select hecha */
+    public Cursor getMaquina(String serialNumber) {
+        final String sqlCode =
+                "SELECT " + queryMaquinasSelectHeaders() +
+                        " FROM " + BuidemHelper.TABLE_MAQUINA  +
+                        " INNER JOIN " + BuidemHelper.TABLE_CLIENT +
+                        " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_CLIENT + " = " + BuidemHelper.TABLE_CLIENT + "." + BuidemHelper.CLIENT_ID +
+                        " INNER JOIN " + BuidemHelper.TABLE_ZONA +
+                        " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_ZONA + " = " + BuidemHelper.TABLE_ZONA + "." + BuidemHelper.ZONA_ID +
+                        " INNER JOIN " + BuidemHelper.TABLE_TIPUS +
+                        " ON " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_TIPUS + " = " + BuidemHelper.TABLE_TIPUS + "." + BuidemHelper.TIPUS_ID +
+                        " WHERE " + BuidemHelper.TABLE_MAQUINA + "." + BuidemHelper.MAQUINA_NUMERO_SERIE + " = '" + serialNumber + "'";
 
         return dbR.rawQuery(sqlCode, null);
     }
