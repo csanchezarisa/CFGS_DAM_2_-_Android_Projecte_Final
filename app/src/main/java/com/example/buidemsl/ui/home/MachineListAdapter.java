@@ -1,5 +1,6 @@
 package com.example.buidemsl.ui.home;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,6 +28,7 @@ public class MachineListAdapter extends SimpleCursorAdapter {
         this.parentFragment = (HomeFragment) parentFragment;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
