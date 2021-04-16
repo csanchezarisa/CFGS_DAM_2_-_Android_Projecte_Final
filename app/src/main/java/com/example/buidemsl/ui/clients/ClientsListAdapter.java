@@ -27,26 +27,43 @@ public class ClientsListAdapter extends SimpleCursorAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
 
+        // Se recupera el cliente
         Cursor client = (Cursor) getItem(position);
 
+        // Se extrae el Email y el Telefono
         final String EMAIL = client.getString(client.getColumnIndexOrThrow(BuidemHelper.CLIENT_EMAIL));
         final String PHONE = client.getString(client.getColumnIndexOrThrow(BuidemHelper.CLIENT_TELEFON));
 
+        // Se busca el botón para enviar el email y el de la llamada
         ImageView btnEmail = (ImageView) view.findViewById(R.id.list_item_client_img_email);
         ImageView btnPhone = (ImageView) view.findViewById(R.id.list_item_client_img_phone);
 
-        btnEmail.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("mailto:"));
-            intent.putExtra(Intent.EXTRA_EMAIL, EMAIL);
-            parentFragment.startActivity(intent);
-        });
+        // Si hay un email configurado, se activa el botón par enviar el email.
+        // Sino, se hace invisible
+        if (EMAIL.length() > 0) {
+            btnEmail.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, EMAIL);
+                parentFragment.startActivity(intent);
+            });
+        }
+        else {
+            btnEmail.setVisibility(View.GONE);
+        }
 
-        btnPhone.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:" + PHONE));
-            parentFragment.startActivity(intent);
-        });
+        // Si hay un teléfono configurado se activa el botón para marcarlo
+        // sino, se hace invisible
+        if (PHONE.length() > 0) {
+            btnPhone.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + PHONE));
+                parentFragment.startActivity(intent);
+            });
+        }
+        else {
+            btnPhone.setVisibility(View.GONE);
+        }
 
         view.setOnClickListener(v -> parentFragment.mostrarAlertCliente(getItemId(position)));
 
