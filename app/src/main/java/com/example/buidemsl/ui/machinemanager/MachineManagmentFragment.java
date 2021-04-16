@@ -259,6 +259,7 @@ public class MachineManagmentFragment extends Fragment {
                 final long client = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_CLIENT));
                 final long zone = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ZONA));
                 final long type = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_TIPUS));
+                maquina.close();
 
                 edtSerial.setText(serial);
                 edtDirection.setText(direction);

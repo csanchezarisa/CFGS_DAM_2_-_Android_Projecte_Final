@@ -150,6 +150,7 @@ public class MapsFragment extends Fragment {
                     final long idMaquina = maquina.getLong(maquina.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ID));
                     openMaquinaFragment(idMaquina);
                 }
+                maquina.close();
             });
         }
     };

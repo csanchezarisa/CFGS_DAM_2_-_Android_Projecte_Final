@@ -121,6 +121,8 @@ public class CursorsUtil {
             while (cursorMaquinas.moveToNext());
         }
 
+        cursorMaquinas.close();
+
         return list;
     }
 }

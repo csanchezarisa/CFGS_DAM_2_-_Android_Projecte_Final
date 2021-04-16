@@ -97,6 +97,7 @@ public class ClientsFragment extends Fragment {
             edtSurname.setText(cliente.getString(cliente.getColumnIndexOrThrow(BuidemHelper.CLIENT_COGNOMS)));
             edtEmail.setText(cliente.getString(cliente.getColumnIndexOrThrow(BuidemHelper.CLIENT_EMAIL)));
             edtPhone.setText(cliente.getString(cliente.getColumnIndexOrThrow(BuidemHelper.CLIENT_TELEFON)));
+            cliente.close();
 
             alert.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_delete), (dialog, which) -> mostrarAlertEliminarCliente(id));
         }

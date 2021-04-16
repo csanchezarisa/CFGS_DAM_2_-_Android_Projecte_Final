@@ -104,6 +104,8 @@ public class ZonasFragment extends Fragment {
             alertTitle = getString(R.string.fragment_zonas_alert_add_title);
         }
 
+        zona.close();
+
         AlertDialog alert = new AlertDialog.Builder(getContext()).create();
 
         EditText input = new EditText(getContext());

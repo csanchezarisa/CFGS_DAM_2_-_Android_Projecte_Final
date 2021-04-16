@@ -95,6 +95,8 @@ public class TiposFragment extends Fragment {
             alertTitle = getString(R.string.fragment_zonas_alert_add_title);
         }
 
+        tipo.close();
+
         AlertDialog alert = new AlertDialog.Builder(getContext()).create();
 
         EditText input = new EditText(getContext());
