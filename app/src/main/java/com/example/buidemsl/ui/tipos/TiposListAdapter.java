@@ -15,7 +15,7 @@ import com.example.buidemsl.models.BuidemHelper;
 
 public class TiposListAdapter extends SimpleCursorAdapter {
 
-    private TiposFragment parentFragment;
+    private final TiposFragment parentFragment;
 
     public TiposListAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags, Fragment parentFragment) {
         super(context, layout, c, from, to, flags);
@@ -35,26 +35,13 @@ public class TiposListAdapter extends SimpleCursorAdapter {
         button.setBackgroundColor(colorTipo);
 
         // Se crea un listener en el botón para abrir el ColorPicker
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parentFragment.mostrarAlertSeleccionarColor(getItemId(position), colorTipo);
-            }
-        });
+        button.setOnClickListener(v -> parentFragment.mostrarAlertSeleccionarColor(getItemId(position), colorTipo));
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parentFragment.openMap(getItemId(position));
-            }
-        });
+        view.setOnClickListener(v -> parentFragment.openMap(getItemId(position)));
 
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                parentFragment.mostrarAlertTipo(getItemId(position));
-                return true;
-            }
+        view.setOnLongClickListener(v -> {
+            parentFragment.mostrarAlertTipo(getItemId(position));
+            return true;
         });
 
         return view;
