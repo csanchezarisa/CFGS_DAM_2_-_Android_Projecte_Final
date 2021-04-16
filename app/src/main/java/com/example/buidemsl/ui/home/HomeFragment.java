@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -30,6 +31,7 @@ public class HomeFragment extends Fragment {
 
     private TextView listEmptyText;
     private ImageView listEmptyImg;
+    private Menu menu;
 
     private MachineOrderByEnum orderByEnum = MachineOrderByEnum.CLIENT_NAME;
     private String filter = "";
@@ -83,6 +85,8 @@ public class HomeFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_home_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        this.menu = menu;
+        setFilterMenuIcon();
     }
 
     @Override
@@ -177,6 +181,7 @@ public class HomeFragment extends Fragment {
         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.default_alert_accept), (dialog, which) -> {
             filter = edtSerialNumber.getText().toString();
             refreshList();
+            setFilterMenuIcon();
         });
 
         alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.default_alert_cancel), (dialog, which) -> {
@@ -186,9 +191,20 @@ public class HomeFragment extends Fragment {
         alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.default_alert_clear), (dialog, which) -> {
             filter = "";
             refreshList();
+            setFilterMenuIcon();
         });
 
         alertDialog.show();
+    }
+
+    /** Método que cambia el icono de la opción de búsqueda del menú
+     * cuando se está filtrando por algún número de série.
+     * Si no se está filtrando, pone el icono de la lupa*/
+    private void setFilterMenuIcon() {
+        if (this.filter.length() > 0)
+            menu.getItem(0).setIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_filter));
+        else
+            menu.getItem(0).setIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_search));
     }
 
     /** Actualiza el contenidoq que se muestra en la lista */
