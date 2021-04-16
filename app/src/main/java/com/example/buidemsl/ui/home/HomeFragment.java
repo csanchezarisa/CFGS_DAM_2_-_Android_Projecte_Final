@@ -1,5 +1,6 @@
 package com.example.buidemsl.ui.home;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -89,6 +90,7 @@ public class HomeFragment extends Fragment {
         setFilterMenuIcon();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
