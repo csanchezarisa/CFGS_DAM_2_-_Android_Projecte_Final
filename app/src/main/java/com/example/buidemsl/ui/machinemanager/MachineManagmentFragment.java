@@ -1,5 +1,6 @@
 package com.example.buidemsl.ui.machinemanager;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 
 import android.app.DatePickerDialog;
@@ -7,6 +8,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -14,6 +16,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -70,6 +75,9 @@ public class MachineManagmentFragment extends Fragment {
 
         datasource = new MainDatasource(getContext());
 
+        // Para editar las opciones del menú por las personalizadas
+        setHasOptionsMenu(true);
+
         btnAdd = (FloatingActionButton) root.findViewById(R.id.btn_add_new_maquina);
         btnEdit = (FloatingActionButton) root.findViewById(R.id.btn_edit_maquina);
         btnDelete = (FloatingActionButton) root.findViewById(R.id.btn_delete_maquina);
@@ -116,6 +124,25 @@ public class MachineManagmentFragment extends Fragment {
         configureLayout();
 
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        // Si se está mirando una máquina ya creada, se activa el botón para
+        // verla en el mapa
+        if (id >= 0)
+            inflater.inflate(R.menu.fragment_machine_managment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.btn_menu_map) {
+            navigateFragment(id, NAVIGATE_MAPS);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /** Rellena los spiners/dropdowns con el contenido  */
@@ -271,7 +298,7 @@ public class MachineManagmentFragment extends Fragment {
 
             case NAVIGATE_MAPS:
                 Bundle bundle = new Bundle();
-                bundle.putString("column_name", BuidemHelper.TABLE_MAQUINA);
+                bundle.putString("column_name", BuidemHelper.MAQUINA_ID);
                 bundle.putLong("id", idMaquina);
                 NavHostFragment.findNavController(this).navigate(R.id.action_machineManagmentFragment_to_mapsFragment, bundle);
                 break;
