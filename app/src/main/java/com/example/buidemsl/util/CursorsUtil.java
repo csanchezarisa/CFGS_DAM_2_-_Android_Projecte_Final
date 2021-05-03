@@ -60,7 +60,7 @@ public class CursorsUtil {
                 codiPostal = cursorMaquinas.getString(cursorMaquinas.getColumnIndexOrThrow(BuidemHelper.MAQUINA_CODI_POSTAL));
                 try {
                     date = new Date(
-                            cursorMaquinas.getString(cursorMaquinas.getColumnIndexOrThrow(BuidemHelper.MAQUINA_ULTIMA_REVISIO)),
+                            cursorMaquinas.getString(cursorMaquinas.getColumnIndexOrThrow("")),
                             true
                     );
                 }
